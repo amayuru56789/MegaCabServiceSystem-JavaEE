@@ -1,0 +1,87 @@
+
+CREATE DATABASE IF NOT EXISTS `cabServiceDb`;
+
+SHOW DATABASES;
+
+USE `cabServiceDb`;
+
+CREATE TABLE IF NOT EXISTS Customer (
+	customerId VARCHAR(12) NOT NULL,
+	customerName VARCHAR(45) DEFAULT('Unknown'),
+	address TEXT,
+	email VARCHAR(25),
+	telephoneNo VARCHAR(10),
+	nicNo VARCHAR(20),
+	CONSTRAINT PRIMARY KEY(customerId)
+);
+
+SHOW TABLES;
+DESC Customer;
+
+INSERT INTO Customer VALUES
+('C001', 'Kamal', 'Matugama', 'kamal@123', '0769689591', '123131V'),
+('C002', 'Nimal', 'Colombo', 'nimal@123', '0769689591', '123131V'),
+('C003', 'Amayuru', 'Koswathta', 'ama@123', '0769689591', '123131V');
+
+SELECT * FROM Customer;
+
+CREATE TABLE IF NOT EXISTS Cab (
+	cabId VARCHAR(10) NOT NULL,
+	model VARCHAR(34),
+	milage INT,
+	availableStatus VARCHAR(10),
+	price DECIMAL(6,2) NOT NULL DEFAULT 0.00,
+	capacity VARCHAR(36),
+	CONSTRAINT PRIMARY KEY(cabId)
+);
+
+CREATE TABLE IF NOT EXISTS Cab (
+    cabId VARCHAR(10) NOT NULL,
+    model VARCHAR(34),
+    milage INT,
+    availableStatus VARCHAR(10),  
+    price DECIMAL(6,2) NOT NULL DEFAULT '0.00', 
+    capacity VARCHAR(36),
+    PRIMARY KEY (cabId)
+);
+
+INSERT INTO Cab VALUES
+('CAB-01', 'Honda', 1212, 'available', 100.2, '1500CC'),
+('CAB-02', 'Hyunadai', 52612, 'available', 100.2, '1500CC'),
+('CAB-03', 'Toyota', 1212, 'available', 100.2, '1500CC');
+
+CREATE TABLE IF NOT EXISTS Booking (
+	bookingId VARCHAR(10) NOT NULL,
+	customerId VARCHAR(12) NOT NULL,
+	cabId VARCHAR(10) NOT NULL,
+	registrationNo VARCHAR(25), 
+	bookingDate DATE,
+	destination VARCHAR(45),
+	destinationDetail VARCHAR(500),
+	activityStatus VARCHAR(10),
+	CONSTRAINT PRIMARY KEY(bookingId),
+	CONSTRAINT FOREIGN KEY(customerId) REFERENCES Customer (customerId),
+	CONSTRAINT FOREIGN KEY(cabId) REFERENCES Cab (cabId)
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO Booking VALUES
+('B001', 'C001', 'CAB-01', 'R001', '2025-01-28', 'colombo', 'asasas', 'start'),
+('B002', 'C002', 'CAB-01', 'R001', '2025-01-28', 'colombo', 'asasas', 'end'),
+('B003', 'C003', 'CAB-01', 'R001', '2025-01-28', 'colombo', 'asasas', 'ama@123');
+
+
+
+CREATE TABLE IF NOT EXISTS Driver (
+	driverId VARCHAR(10) NOT NULL,
+	driverName VARCHAR(45) DEFAULT 'Unknown',
+	mobileNo VARCHAR(25),
+	license VARCHAR(36),
+	experienceYears VARCHAR(12),
+	CONSTRAINT PRIMARY KEY(driverId)
+);	
+
+INSERT INTO Driver VALUES
+('D001', 'Amayuru', 1212, '1221dsd','5year'),
+('D002', 'Mike', 52612, '1221dsd', '2year'),
+('D003', 'Don', 1212, '1221dsd', '5year');
