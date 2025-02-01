@@ -20,12 +20,36 @@
   </properties>
 
   <dependencies>
+    <!--<dependency>-->
+      <!--<groupId>junit</groupId>-->
+      <!--<artifactId>junit</artifactId>-->
+      <!--<version>4.13.1</version>-->
+      <!--<scope>test</scope>-->
+    <!--</dependency>-->
+
+    <!-- Java EE API (Jakarta EE) -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
-      <scope>test</scope>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <version>8.0.1</version>  <!-- Change from 10.0.0 to 8.0.0 -->
+      <scope>provided</scope>
     </dependency>
+
+    <!-- MySQL JDBC Driver (if using MySQL) -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>
+    </dependency>
+
+    <!-- Servlet API -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>5.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
