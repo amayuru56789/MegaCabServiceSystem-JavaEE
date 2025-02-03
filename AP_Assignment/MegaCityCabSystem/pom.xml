@@ -28,10 +28,17 @@
     <!--</dependency>-->
 
     <!-- Java EE API (Jakarta EE) -->
+    <!--<dependency>-->
+      <!--<groupId>jakarta.platform</groupId>-->
+      <!--<artifactId>jakarta.jakartaee-api</artifactId>-->
+      <!--<version>8.0.0</version>  &lt;!&ndash; Change from 10.0.0 to 8.0.0 &ndash;&gt;-->
+      <!--<scope>provided</scope>-->
+    <!--</dependency>-->
+    <!-- Java EE API (includes Servlets, JSP, etc.) -->
     <dependency>
-      <groupId>jakarta.platform</groupId>
-      <artifactId>jakarta.jakartaee-api</artifactId>
-      <version>8.0.1</version>  <!-- Change from 10.0.0 to 8.0.0 -->
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>8.0</version>
       <scope>provided</scope>
     </dependency>
 
@@ -43,10 +50,17 @@
     </dependency>
 
     <!-- Servlet API -->
+    <!--<dependency>-->
+      <!--<groupId>jakarta.servlet</groupId>-->
+      <!--<artifactId>jakarta.servlet-api</artifactId>-->
+      <!--<version>5.0.0</version>-->
+      <!--<scope>provided</scope>-->
+    <!--</dependency>-->
+    <!-- Servlet API (Standalone, if not using full Java EE API) -->
     <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <version>5.0.0</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
 
@@ -84,6 +98,15 @@
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>3.1.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.6</version>
+          <configuration>
+            <warSourceExcludes>WEB-INF/lib/**</warSourceExcludes>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
