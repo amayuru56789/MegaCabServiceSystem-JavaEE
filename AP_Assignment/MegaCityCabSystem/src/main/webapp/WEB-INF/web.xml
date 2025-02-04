@@ -19,7 +19,7 @@
   <!--</servlet-mapping>-->
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>lk.icbt.MegaCityCabSystem.controller.HelloServlet</servlet-class>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.UserLoginServlet</servlet-class>
   </servlet>
 
 
