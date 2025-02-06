@@ -32,13 +32,13 @@ public class UserLoginServlet extends HttpServlet {
         if (equal){
             JsonObjectBuilder response = Json.createObjectBuilder();
             response.add("status", 200);
-            response.add("message", true);
+            response.add("message", "Welcome " +userName+ "! You have successfully logged in.");
             response.add("data", JsonValue.NULL);
             writer.print(response.build());
         }else{
             JsonObjectBuilder response = Json.createObjectBuilder();
             response.add("status", 400);
-            response.add("message", false);
+            response.add("message", "Invalid credentials! Please check your username and password.");
             response.add("data", JsonValue.NULL);
             writer.print(response.build());
         }
