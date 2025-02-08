@@ -1,5 +1,6 @@
 package lk.icbt.MegaCityCabSystem.entity;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 public class Customer {
@@ -10,22 +11,31 @@ public class Customer {
     private String email;
     private String telephoneNo;
 
-
+    private String userName;
+    private String password;
     private String registrationNo;
     private Date registrationDate;
+    private LocalTime registrationTime;
+    private Date updatedDate;
+    private LocalTime updatedTime;
 
     public Customer() {
     }
 
-    public Customer(String customerId, String customerName, String address, String nic, String email, String telephoneNo, String registrationNo, Date registrationDate) {
+    public Customer(String customerId, String customerName, String address, String nic, String email, String telephoneNo, String userName, String password, String registrationNo, Date registrationDate, LocalTime registrationTime, Date updatedDate, LocalTime updatedTime) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
         this.nic = nic;
         this.email = email;
         this.telephoneNo = telephoneNo;
+        this.userName = userName;
+        this.password = password;
         this.registrationNo = registrationNo;
         this.registrationDate = registrationDate;
+        this.registrationTime = registrationTime;
+        this.updatedDate = updatedDate;
+        this.updatedTime = updatedTime;
     }
 
     public String getCustomerId() {
@@ -76,6 +86,22 @@ public class Customer {
         this.telephoneNo = telephoneNo;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getRegistrationNo() {
         return registrationNo;
     }
@@ -90,6 +116,30 @@ public class Customer {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public LocalTime getRegistrationTime() {
+        return registrationTime;
+    }
+
+    public void setRegistrationTime(LocalTime registrationTime) {
+        this.registrationTime = registrationTime;
+    }
+
+    public Date getUpdatedDate() {
+        return registrationDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public LocalTime getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(LocalTime updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override

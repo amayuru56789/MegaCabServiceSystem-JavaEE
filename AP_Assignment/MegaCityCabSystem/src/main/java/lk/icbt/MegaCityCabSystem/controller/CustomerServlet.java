@@ -39,9 +39,11 @@ public class CustomerServlet extends HttpServlet {
         String email = obj.getString("email");
         String contact = obj.getString("telephoneNo");
         String nic = obj.getString("nic");
+        String user = obj.getString("user");
+        String password = obj.getString("password");
 
         CustomerDTO customerDTO = new CustomerDTO(customerID, customerName, address, nic, email, contact,
-                "null", new Date());
+                user, password, "null", new Date(), null, new Date(), null);
 
         if (customerBO.registrationCustomer(customerDTO)){
             JsonObjectBuilder response = Json.createObjectBuilder();
