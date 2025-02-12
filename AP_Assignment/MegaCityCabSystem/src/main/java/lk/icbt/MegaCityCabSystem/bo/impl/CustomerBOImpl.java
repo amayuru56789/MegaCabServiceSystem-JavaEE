@@ -19,9 +19,16 @@ public class CustomerBOImpl implements CustomerBO {
     CustomerDAO customerDAO = new CustomerDAOImpl();
 
     @Override
-    public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
+    public ArrayList<CustomerDTO> getAllCustomer() {
 
-        ArrayList<Customer> all = customerDAO.getAllCustomers();
+        ArrayList<Customer> all = null;
+        try {
+            all = customerDAO.getAllCustomers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
         for (Customer customer : all) {
             customerDTOS.add(
@@ -87,6 +94,11 @@ public class CustomerBOImpl implements CustomerBO {
     @Override
     public boolean updateCustomer(CustomerDTO customerDTO)  {
         try {
+
+            LocalTime time = getCurrentFormattedTime();
+            customerDTO.setUpdatedDate(new Date());
+            customerDTO.setUpdatedTime(time);
+
             return customerDAO.updateCustomer(new Customer(
                     customerDTO.getCustomerId(),
                     customerDTO.getCustomerName(),

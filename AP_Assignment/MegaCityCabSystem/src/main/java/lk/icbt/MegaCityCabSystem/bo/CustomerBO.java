@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface CustomerBO {
 
-    ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
+    ArrayList<CustomerDTO> getAllCustomer();
 
     boolean registrationCustomer (CustomerDTO customerDTO);
 

@@ -14,7 +14,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public ArrayList<Customer> getAllCustomers() throws SQLException, ClassNotFoundException {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/epic", "root", "1234");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
         PreparedStatement pstm = con.prepareStatement("select * from Customer");
 
         ResultSet rst = pstm.executeQuery();
@@ -24,16 +24,18 @@ public class CustomerDAOImpl implements CustomerDAO {
             Customer customer = new Customer(
                     rst.getString(1),
                     rst.getString(2),
+
                     rst.getString(3),
+                    rst.getString(6),
                     rst.getString(4),
                     rst.getString(5),
-                    rst.getString(6),
+
                     rst.getString(7),
                     rst.getString(8),
                     rst.getString(9),
                     rst.getDate(10),
                     null,
-                    rst.getDate(12),
+                    rst.getDate(11),
                     null
             );
             customers.add(customer);
@@ -84,22 +86,22 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean updateCustomer(Customer entity) throws SQLException, ClassNotFoundException {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/epic", "root", "1234");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
 //        LocalDateTime time = LocalDateTime.now();
 //        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 //        String lastDateTime = time.format(format);
         //String passwordEncrypt = en.encrypt(registration.getPassword());
-        PreparedStatement pstm = con.prepareStatement("update Customer set customerName=?, address=?, email=?, telephoneNo=?, nicNo=?, registrationDate=?, updatedDate=?, registrationTime=?, updatedTime=? where customerId=?");
+        PreparedStatement pstm = con.prepareStatement("update Customer set customerName=?, address=?, email=?, telephoneNo=?, nicNo=?, updatedDate=?, updatedTime=? where customerId=?");
         pstm.setObject(1, entity.getCustomerName());
         pstm.setObject(2, entity.getAddress());
         pstm.setObject(3, entity.getEmail());
         pstm.setObject(4, entity.getTelephoneNo());
         pstm.setObject(5, entity.getNic());
-        pstm.setObject(6, entity.getRegistrationDate());
-        pstm.setObject(7, entity.getUpdatedDate());
-        pstm.setObject(8, entity.getRegistrationTime());
-        pstm.setObject(9, entity.getUpdatedTime());
-        pstm.setObject(10, entity.getCustomerId());
+//        pstm.setObject(6, entity.getRegistrationDate());
+        pstm.setObject(6, entity.getUpdatedDate());
+//        pstm.setObject(8, entity.getRegistrationTime());
+        pstm.setObject(7, entity.getUpdatedTime());
+        pstm.setObject(8, entity.getCustomerId());
 
         if (pstm.executeUpdate() > 0){
             return true;
@@ -112,7 +114,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/epic", "root", "1234");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
         PreparedStatement pstm = con.prepareStatement("delete from Customer where customerId=?");
         pstm.setObject(1, id);
 
