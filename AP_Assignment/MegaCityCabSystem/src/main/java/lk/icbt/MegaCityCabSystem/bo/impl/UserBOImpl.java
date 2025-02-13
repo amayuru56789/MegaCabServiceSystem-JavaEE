@@ -2,7 +2,7 @@ package lk.icbt.MegaCityCabSystem.bo.impl;
 
 import lk.icbt.MegaCityCabSystem.bo.UserBO;
 import lk.icbt.MegaCityCabSystem.dao.UserDAO;
-import lk.icbt.MegaCityCabSystem.dao.UserDAOImpl;
+import lk.icbt.MegaCityCabSystem.dao.impl.UserDAOImpl;
 
 public class UserBOImpl implements UserBO {
 

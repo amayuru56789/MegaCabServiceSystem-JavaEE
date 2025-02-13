@@ -1,4 +1,6 @@
-package lk.icbt.MegaCityCabSystem.dao;
+package lk.icbt.MegaCityCabSystem.dao.impl;
+
+import lk.icbt.MegaCityCabSystem.dao.UserDAO;
 
 import java.sql.*;
 
