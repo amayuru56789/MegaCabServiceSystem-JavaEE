@@ -6,16 +6,23 @@ public class DriverDTO {
     private String mobileNo;
     private String license;
     private String experienceOfYear;
+    private String email;
+    private String address;
+    private String status;
 
     public DriverDTO() {
     }
 
-    public DriverDTO(String driverID, String driverName, String mobileNo, String license, String experienceOfYear) {
+    public DriverDTO(String driverID, String driverName, String mobileNo, String license, String experienceOfYear, String email, String address, String status) {
         this.driverID = driverID;
         this.driverName = driverName;
         this.mobileNo = mobileNo;
         this.license = license;
         this.experienceOfYear = experienceOfYear;
+        this.email = email;
+        this.address = address;
+        this.status = status;
+
     }
 
     public String getDriverID() {
@@ -56,6 +63,30 @@ public class DriverDTO {
 
     public void setExperienceOfYear(String experienceOfYear) {
         this.experienceOfYear = experienceOfYear;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

@@ -36,6 +36,16 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>DriverAuthFilter</filter-name>
+    <filter-class>lk.icbt.MegaCityCabSystem.filter.DriverAuthFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>DriverAuthFilter</filter-name>
+    <url-pattern>/driver/*</url-pattern>
+  </filter-mapping>
+
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>lk.icbt.MegaCityCabSystem.controller.UserLoginServlet</servlet-class>
@@ -50,6 +60,46 @@
     <servlet-name>LoginPageServlet</servlet-name>
     <url-pattern>/auth/login</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CustomerPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.CustomerPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CustomerPageServlet</servlet-name>
+    <url-pattern>/customer-form</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CabsPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.CabsPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CabsPageServlet</servlet-name>
+    <url-pattern>/customer/cabs-view</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.AdminPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AdminPageServlet</servlet-name>
+    <url-pattern>/admin-form</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DriverPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.DriverPageServlet</servlet-class>
+  </servlet>
+
+<servlet-mapping>
+<servlet-name>DriverPageServlet</servlet-name>
+<url-pattern>/admin/drivers-manage</url-pattern>
+</servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>

@@ -9,45 +9,127 @@ import java.util.ArrayList;
 
 public class DriverDAOImpl implements DriverDAO {
     @Override
+//    public ArrayList<Driver> getAllDriver() throws SQLException, ClassNotFoundException {
+//
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+//        PreparedStatement pstm = con.prepareStatement("select * from Driver");
+//
+//        ResultSet rst = pstm.executeQuery();
+//
+//        ArrayList<Driver> drivers = new ArrayList<>();
+//        while(rst.next()){
+//            Driver driver = new Driver(
+//                    rst.getString(1),
+//                    rst.getString(2),
+//                    rst.getString(3),
+//                    rst.getString(4),
+//                    rst.getString(5),
+//                    rst.getString(6),
+//                    rst.getString(7),
+//                    rst.getString(8)
+//            );
+//            drivers.add(driver);
+//        }
+//
+//        return drivers;
+//    }
     public ArrayList<Driver> getAllDriver() throws SQLException, ClassNotFoundException {
-
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
-        PreparedStatement pstm = con.prepareStatement("select * from Driver");
-
-        ResultSet rst = pstm.executeQuery();
-
         ArrayList<Driver> drivers = new ArrayList<>();
-        while(rst.next()){
-            Driver driver = new Driver(
-                    rst.getString(1),
-                    rst.getString(2),
-                    rst.getString(3),
-                    rst.getString(4),
-                    rst.getString(5)
-            );
-            drivers.add(driver);
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet rst = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+
+            String query = "SELECT * FROM Driver";
+            pstm = con.prepareStatement(query);
+            rst = pstm.executeQuery();
+
+            while (rst.next()) {
+                Driver driver = new Driver(
+                        rst.getString("driverID"),
+                        rst.getString("driverName"),
+                        rst.getString("mobileNo"),
+                        rst.getString("license"),
+                        rst.getString("experienceYears"),
+                        rst.getString("email") != null ? rst.getString("email") : "--", // Handle null email
+                        rst.getString("address") != null ? rst.getString("address") : "--", // Handle null address
+                        rst.getString("status") != null ? rst.getString("address") : "--"
+                );
+                drivers.add(driver);
+            }
+        } finally {
+            if (rst != null) rst.close();
+            if (pstm != null) pstm.close();
+            if (con != null) con.close();
         }
 
         return drivers;
     }
 
     @Override
+//    public boolean saveDriver(Driver entity) throws SQLException, ClassNotFoundException {
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+//        con.setAutoCommit(false); // Start transaction
+//        PreparedStatement pstm = con.prepareStatement("insert into Driver values(?,?,?,?,?,?,?,?)");
+//        pstm.setObject(1, entity.getDriverID());
+//        pstm.setObject(2, entity.getDriverName());
+//        pstm.setObject(3, entity.getMobileNo());
+//        pstm.setObject(4, entity.getLicense());
+//        pstm.setObject(5, entity.getExperienceOfYear());
+//        pstm.setObject(6, entity.getEmail());
+//        pstm.setObject(7, entity.getAddress());
+//        pstm.setObject(8, entity.getStatus());
+//
+//        if (pstm.executeUpdate()>0){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
     public boolean saveDriver(Driver entity) throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
-        con.setAutoCommit(false); // Start transaction
-        PreparedStatement pstm = con.prepareStatement("insert into Driver values(?,?,?,?,?)");
-        pstm.setObject(1, entity.getDriverID());
-        pstm.setObject(2, entity.getDriverName());
-        pstm.setObject(3, entity.getMobileNo());
-        pstm.setObject(4, entity.getLicense());
-        pstm.setObject(5, entity.getExperienceOfYear());
+        Connection con = null;
+        PreparedStatement pstm = null;
 
-        if (pstm.executeUpdate()>0){
-            return true;
-        }else{
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+            con.setAutoCommit(false); // Start transaction
+
+            String query = "INSERT INTO Driver (driverID, driverName, mobileNo, license, experienceYears, email, address, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            pstm = con.prepareStatement(query);
+            pstm.setObject(1, entity.getDriverID());
+            pstm.setObject(2, entity.getDriverName());
+            pstm.setObject(3, entity.getMobileNo());
+            pstm.setObject(4, entity.getLicense());
+            pstm.setObject(5, entity.getExperienceOfYear());
+            pstm.setObject(6, entity.getEmail());
+            pstm.setObject(7, entity.getAddress());
+            pstm.setObject(8, entity.getStatus());
+
+            int rowsAffected = pstm.executeUpdate();
+
+            if (rowsAffected > 0) {
+                con.commit(); // Commit the transaction
+                return true;
+            } else {
+                con.rollback(); // Rollback the transaction
+                return false;
+            }
+        } catch (Exception e) {
+            if (con != null) {
+                con.rollback(); // Rollback the transaction in case of an exception
+            }
+            e.printStackTrace(); // Log the exception
             return false;
+        } finally {
+            // Close resources
+            if (pstm != null) pstm.close();
+            if (con != null) con.close();
         }
     }
 
@@ -102,7 +184,10 @@ public class DriverDAOImpl implements DriverDAO {
                     rst.getString(2),
                     rst.getString(3),
                     rst.getString(4),
-                    rst.getString(5)
+                    rst.getString(5),
+                    rst.getString(6),
+                    rst.getString(7),
+                    rst.getString(8)
             );
         }else{
             return null;

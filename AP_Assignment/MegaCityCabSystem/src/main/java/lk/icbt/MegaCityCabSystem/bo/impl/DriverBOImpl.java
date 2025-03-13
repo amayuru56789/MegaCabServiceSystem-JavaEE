@@ -30,7 +30,10 @@ public class DriverBOImpl implements DriverBO {
                                 driver.getDriverName(),
                                 driver.getMobileNo(),
                                 driver.getLicense(),
-                                driver.getExperienceOfYear()
+                                driver.getExperienceOfYear(),
+                                driver.getEmail(),
+                                driver.getAddress(),
+                                driver.getStatus()
                         )
                 );
             }
@@ -55,7 +58,10 @@ public class DriverBOImpl implements DriverBO {
                     driverDTO.getDriverName(),
                     driverDTO.getMobileNo(),
                     driverDTO.getLicense(),
-                    driverDTO.getExperienceOfYear()
+                    driverDTO.getExperienceOfYear(),
+                    driverDTO.getEmail(),
+                    driverDTO.getAddress(),
+                    driverDTO.getStatus()
             ));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,7 +81,10 @@ public class DriverBOImpl implements DriverBO {
                     driverDTO.getDriverName(),
                     driverDTO.getMobileNo(),
                     driverDTO.getLicense(),
-                    driverDTO.getExperienceOfYear()
+                    driverDTO.getExperienceOfYear(),
+                    driverDTO.getEmail(),
+                    driverDTO.getAddress(),
+                    driverDTO.getStatus()
             ));
 
         } catch (SQLException e) {
@@ -118,7 +127,10 @@ public class DriverBOImpl implements DriverBO {
                         searchDriver.getDriverName(),
                         searchDriver.getMobileNo(),
                         searchDriver.getLicense(),
-                        searchDriver.getExperienceOfYear()
+                        searchDriver.getExperienceOfYear(),
+                        searchDriver.getEmail(),
+                        searchDriver.getAddress(),
+                        searchDriver.getStatus()
                 );
 
             }else{

@@ -16,11 +16,12 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/login")
 public class UserLoginServlet extends HttpServlet {
 
+    UserBO userBO = new UserBOImpl();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         log("user login print msg");
-        UserBO userBO = new UserBOImpl();
 
         // Check if it's a JSON request or form submission
         String contentType = req.getContentType();
@@ -33,11 +34,6 @@ public class UserLoginServlet extends HttpServlet {
             handleFormSubmission(req, resp, userBO);
         }
 
-
-//
-
-//
-//
 
     }
 
@@ -54,10 +50,7 @@ public class UserLoginServlet extends HttpServlet {
 
         boolean equal = userBO.equalityUser(userName, password);
 
-
-
         if (equal){
-
             // Get user role and ID (you'll need to modify UserBO to get these)
             String userRole = getUserRole(userName); // Implement this method
             int userId = getUserId(userName); // Implement this method
@@ -112,21 +105,25 @@ public class UserLoginServlet extends HttpServlet {
         // For example: return userDAO.findRoleByUsername(userName);
 
         // Sample implementation for demo purposes
-        if (userName.startsWith("admin")) {
-            return "admin";
-        } else if (userName.startsWith("driver")) {
-            return "driver";
-        } else {
-            return "customer";
-        }
+//        if (userName.startsWith("admin")) {
+//            return "admin";
+//        } else if (userName.startsWith("driver")) {
+//            return "driver";
+//        } else {
+//            return "customer";
+//        }
+        String roleByUsername = userBO.findRoleByUsername(userName);
+        return roleByUsername;
     }
 
     private int getUserId(String userName) {
         // Implement this to get user ID from your database
         // For example: return userDAO.findIdByUsername(userName);
 
-        // Sample implementation for demo purposes
-        return 1; // Dummy ID
+//        // Sample implementation for demo purposes
+//        return 1; // Dummy ID
+
+        return userBO.findIdByUsername(userName);
     }
 
     private boolean validateUserRole(String userName, String claimedRole) {
@@ -138,11 +135,11 @@ public class UserLoginServlet extends HttpServlet {
     private String getRedirectUrl(String userRole, String contextPath) {
         switch (userRole) {
             case "admin":
-                return contextPath + "/admin/dashboard.jsp";
+                return contextPath + "/admin-form";
             case "driver":
                 return contextPath + "/driver/dashboard.jsp";
             case "customer":
-                return contextPath + "/customer/booking-form.jsp";
+                return contextPath + "/customer-form";
             default:
                 return contextPath + "/index.jsp";
         }

@@ -81,7 +81,21 @@ CREATE TABLE IF NOT EXISTS Driver (
 	CONSTRAINT PRIMARY KEY(driverId)
 );	
 
+ALTER TABLE Driver 
+ADD COLUMN email VARCHAR(100),
+ADD COLUMN address VARCHAR(255),
+ADD COLUMN status VARCHAR(12);
+
 INSERT INTO Driver VALUES
 ('D001', 'Amayuru', 1212, '1221dsd','5year'),
 ('D002', 'Mike', 52612, '1221dsd', '2year'),
 ('D003', 'Don', 1212, '1221dsd', '5year');
+
+
+DELETE FROM user;
+INSERT INTO user (username, password, userRole) VALUES
+('Amayuru', 'a', 'admin'),
+('Indeewra', 'a', 'customer'),
+('User', 'a', 'driver');
+
+ALTER TABLE user AUTO_INCREMENT = 1;

@@ -17,4 +17,33 @@ public class UserBOImpl implements UserBO {
             return false;
         }
     }
+
+    @Override
+    public String findRoleByUsername(String userName) {
+        String roleByUsername = userDAO.findRoleByUsername(userName);
+
+        // If role is not found, throw an exception
+        if (roleByUsername == null) {
+            throw new UserNotFoundException("User not found with username: " + userName);
+        }
+
+        return roleByUsername;
+    }
+
+    @Override
+    public Integer findIdByUsername(String userName) {
+        Integer id = userDAO.findIdByUsername(userName);
+        // If ID is not found, throw an exception
+        if (id == null) {
+            throw new UserNotFoundException("User not found with username: " + userName);
+        }
+
+        return id;
+    }
+
+    public class UserNotFoundException extends RuntimeException {
+        public UserNotFoundException(String message) {
+            super(message);
+        }
+    }
 }
