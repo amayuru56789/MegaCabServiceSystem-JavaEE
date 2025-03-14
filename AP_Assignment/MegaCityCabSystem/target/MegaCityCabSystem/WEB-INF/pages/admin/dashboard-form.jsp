@@ -38,7 +38,7 @@
 </head>
 <body>
 <!-- Include Admin Navbar -->
-<%--<jsp:include page="../includes/admin-navbar.jsp" />--%>
+<jsp:include page="../template/header.jsp" />
 
 <div class="container-fluid mt-4">
     <h2 class="mb-4">Admin Dashboard</h2>
@@ -197,7 +197,7 @@
 </div>
 
 <!-- Include Footer -->
-<%--<jsp:include page="../includes/footer.jsp" />--%>
+<jsp:include page="../template/footer.jsp" />
 
 <!-- Bootstrap JS and Dependencies -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

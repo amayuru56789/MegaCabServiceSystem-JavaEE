@@ -101,6 +101,16 @@
 <url-pattern>/admin/drivers-manage</url-pattern>
 </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RegistrationPageServlet</servlet-name>
+        <servlet-class>lk.icbt.MegaCityCabSystem.controller.RegistrationPageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegistrationPageServlet</servlet-name>
+        <url-pattern>/customer/register</url-pattern>
+    </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>

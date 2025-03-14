@@ -63,15 +63,16 @@
         </button>
     </div>
 
-    <!-- Add Driver Modal -->
+    <!-- Add/Edit Driver Modal -->
     <div id="addDriverForm" class="modal">
         <div class="modal-content">
             <span class="close" onclick="hideAddDriverForm()">&times;</span>
             <h3 class="mb-4">Add New Driver</h3>
             <form id="addDriverFormData">
                 <div class="mb-3">
-                    <label for="driverId" class="form-label">Driver Name:</label>
-                    <input type="text" class="form-control" id="driverId" name="driverId" required>
+                    <%--<label for="driverId" class="form-label">Driver Name:</label>--%>
+                    <%--<input type="text" class="form-control" id="driverId" name="driverId" required>--%>
+                        <input type="hidden" id="driverId" name="driverId"> <!-- Hidden field for driverID -->
                 </div>
                 <div class="mb-3">
                     <label for="driverName" class="form-label">Driver Name:</label>
@@ -110,7 +111,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success" id="submitButton">
                         <i class="fas fa-save me-2"></i> Add Driver
                     </button>
                 </div>
@@ -203,7 +204,8 @@
                         .addClass("btn btn-sm btn-warning me-2")
                         .html('<i class="fas fa-edit me-1"></i> Edit')
                         .click(function () {
-                            showEditDriverForm(driver.driverID);
+                            // showEditDriverForm(driver.driverID);
+                            showEditDriverForm(driver);
                         });
 
                     var deleteButton = $("<button>")
@@ -227,6 +229,10 @@
     });
 
     function showAddDriverForm() {
+        // Reset the form and set the modal title
+        $("#addDriverFormData")[0].reset();
+        $("#modalTitle").text("Add New Driver");
+        $("#submitButton").html('<i class="fas fa-save me-2"></i> Add Driver');
         document.getElementById("addDriverForm").style.display = "block";
     }
 
@@ -234,9 +240,26 @@
         document.getElementById("addDriverForm").style.display = "none";
     }
 
-    function showEditDriverForm(driverId) {
+    function showEditDriverForm(driver) {
         // Implement edit functionality
-        alert("Edit Driver with ID: " + driverId);
+        // alert("Edit Driver with ID: " + driverId);
+
+        // Populate the form with the driver's data
+        $("#driverId").val(driver.driverID);
+        $("#driverName").val(driver.driverName);
+        $("#licenseNumber").val(driver.license);
+        $("#year").val(driver.experience);
+        $("#phone").val(driver.telephoneNo);
+        $("#email").val(driver.email);
+        $("#address").val(driver.address);
+        $("#status").val(driver.status);
+
+        // Set the modal title and button text
+        $("#modalTitle").text("Edit Driver");
+        $("#submitButton").html('<i class="fas fa-save me-2"></i> Update Driver');
+
+        // Show the modal
+        document.getElementById("addDriverForm").style.display = "block";
     }
 
     function confirmDeleteDriver(driverId) {
@@ -246,7 +269,7 @@
         }
     }
 
-    // AJAX for adding a driver
+    // AJAX for adding/updating a driver
     $(document).ready(function () {
         $("#addDriverFormData").on("submit", function (event) {
             event.preventDefault(); // Prevent the default form submission
@@ -263,10 +286,14 @@
                 status: $("#status").val()
             };
 
+            // Determine the URL and method based on whether it's an add or update operation
+            var url = "${pageContext.request.contextPath}/driver";
+            var method = formData.driverId ? "PUT" : "POST";
+
             // Send AJAX request
             $.ajax({
-                url: "${pageContext.request.contextPath}/driver",
-                type: "POST",
+                url: url,
+                type: method,
                 contentType: "application/json",
                 data: JSON.stringify(formData),
                 success: function (response) {

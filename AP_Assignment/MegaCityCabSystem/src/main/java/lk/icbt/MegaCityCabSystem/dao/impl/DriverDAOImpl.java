@@ -138,12 +138,15 @@ public class DriverDAOImpl implements DriverDAO {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
 
-        PreparedStatement pstm = con.prepareStatement("update Driver set driverName=?, mobileNo=?, license=?, expereinceYear=?, where driverId=?");
+        PreparedStatement pstm = con.prepareStatement("update Driver set driverName=?, mobileNo=?, license=?, experienceYears=?, email=?, address=?, status=? where driverId=?");
         pstm.setObject(1, entity.getDriverName());
         pstm.setObject(2, entity.getMobileNo());
         pstm.setObject(3, entity.getLicense());
         pstm.setObject(4, entity.getExperienceOfYear());
-        pstm.setObject(5, entity.getDriverID());
+        pstm.setObject(5, entity.getEmail());
+        pstm.setObject(6, entity.getAddress());
+        pstm.setObject(7, entity.getStatus());
+        pstm.setObject(8, entity.getDriverID());
 
         if (pstm.executeUpdate() > 0){
             return true;

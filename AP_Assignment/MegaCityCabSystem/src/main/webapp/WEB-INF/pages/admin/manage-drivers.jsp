@@ -286,10 +286,14 @@
                 status: $("#status").val()
             };
 
+            // Determine the URL and method based on whether it's an add or update operation
+            var url = "${pageContext.request.contextPath}/driver";
+            var method = formData.driverId ? "PUT" : "POST";
+
             // Send AJAX request
             $.ajax({
-                url: "${pageContext.request.contextPath}/driver",
-                type: "POST",
+                url: url,
+                type: method,
                 contentType: "application/json",
                 data: JSON.stringify(formData),
                 success: function (response) {

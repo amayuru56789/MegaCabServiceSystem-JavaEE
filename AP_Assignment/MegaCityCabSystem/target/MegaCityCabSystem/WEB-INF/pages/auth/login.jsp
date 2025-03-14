@@ -16,6 +16,24 @@
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-image: url('${pageContext.request.contextPath}/assets/images/7533762_3677988.jpg'); /* Update with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding-top: 50px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the card */
+            border-radius: 10px;
+        }
+        .card-header {
+            border-radius: 10px 10px 0 0;
+        }
+    </style>
 </head>
 <body class="bg-light">
 <div class="container">
