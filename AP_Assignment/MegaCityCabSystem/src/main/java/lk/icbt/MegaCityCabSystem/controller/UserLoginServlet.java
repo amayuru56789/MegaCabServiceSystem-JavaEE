@@ -1,7 +1,7 @@
 package lk.icbt.MegaCityCabSystem.controller;
 
-import lk.icbt.MegaCityCabSystem.bo.UserBO;
-import lk.icbt.MegaCityCabSystem.bo.impl.UserBOImpl;
+import lk.icbt.MegaCityCabSystem.UserBO;
+import lk.icbt.MegaCityCabSystem.impl.UserBOImpl;
 import lk.icbt.MegaCityCabSystem.util.SessionUtils;
 
 import javax.json.*;

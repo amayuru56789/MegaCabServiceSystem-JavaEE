@@ -1,9 +1,7 @@
 package lk.icbt.MegaCityCabSystem.controller;
 
-import lk.icbt.MegaCityCabSystem.bo.CustomerBO;
-import lk.icbt.MegaCityCabSystem.bo.impl.CustomerBOImpl;
-import lk.icbt.MegaCityCabSystem.dao.CustomerDAO;
-import lk.icbt.MegaCityCabSystem.dao.impl.CustomerDAOImpl;
+import lk.icbt.MegaCityCabSystem.CustomerBO;
+import lk.icbt.MegaCityCabSystem.impl.CustomerBOImpl;
 import lk.icbt.MegaCityCabSystem.dto.CustomerDTO;
 
 import javax.json.*;

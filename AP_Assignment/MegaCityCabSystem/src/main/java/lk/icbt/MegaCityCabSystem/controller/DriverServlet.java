@@ -1,8 +1,7 @@
 package lk.icbt.MegaCityCabSystem.controller;
 
-import lk.icbt.MegaCityCabSystem.bo.DriverBO;
-import lk.icbt.MegaCityCabSystem.bo.impl.DriverBOImpl;
-import lk.icbt.MegaCityCabSystem.dto.CustomerDTO;
+import lk.icbt.MegaCityCabSystem.DriverBO;
+import lk.icbt.MegaCityCabSystem.impl.DriverBOImpl;
 import lk.icbt.MegaCityCabSystem.dto.DriverDTO;
 
 import javax.json.*;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 
 @WebServlet(name = "DriverServlet", urlPatterns = {"/driver"})
 public class DriverServlet extends HttpServlet {
