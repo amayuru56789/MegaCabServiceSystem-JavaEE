@@ -44,10 +44,25 @@
 
                     <!-- Registration Form -->
                     <form id="registrationForm">
+                        <div class="mb-3">
+                            <label for="customerId" class="form-label">Customer ID</label>
+                            <input type="text" class="form-control" id="customerId" name="customerId" required>
+                        </div>
+
                         <!-- Full Name -->
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Full Name</label>
                             <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nic" class="form-label">NIC</label>
+                            <input type="text" class="form-control" id="nic" name="nic" required>
                         </div>
 
                         <!-- Email -->
@@ -82,7 +97,7 @@
 
                         <!-- Submit Button -->
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="submit" class="btn btn-primary" id="subBtn">Register</button>
                         </div>
                     </form>
 
@@ -96,6 +111,8 @@
     </div>
 </div>
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
@@ -114,9 +131,54 @@
             return;
         }
 
+        // Create a JSON object from the form data
+        var formData = {
+            customerId: document.getElementById('customerId').value,
+            customerName: document.getElementById('fullName').value,
+            address: document.getElementById('address').value,
+            nic: document.getElementById('nic').value,
+            email: document.getElementById('email').value,
+            telephoneNo: document.getElementById('phone').value,
+            user: document.getElementById('username').value,
+            password: password
+        };
+
+        // Send the form data to the backend using $.ajax
+        $.ajax({
+            url: '${pageContext.request.contextPath}/customer', // Replace with your backend URL
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+                var messageDiv = $('#message');
+                messageDiv.show(); // Show the message div
+
+                if (response.status === 200) {
+                    // Success
+                    messageDiv.removeClass('alert-danger').addClass('alert-success');
+                    messageDiv.text(response.message);
+
+                    // Redirect to the login page after 2 seconds
+                    setTimeout(function () {
+                        window.location.href = '${pageContext.request.contextPath}/auth/login.jsp';
+                    }, 2000);
+                } else {
+                    // Error
+                    messageDiv.removeClass('alert-success').addClass('alert-danger');
+                    messageDiv.text(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                var messageDiv = $('#message');
+                messageDiv.show(); // Show the message div
+                messageDiv.removeClass('alert-success').addClass('alert-danger');
+                messageDiv.text("An error occurred. Please try again.");
+            }
+        });
+
         // If validation passes, submit the form via AJAX or redirect
-        alert('Registration successful!');
-        window.location.href = '${pageContext.request.contextPath}/auth/login.jsp'; // Redirect to login page
+        <%--alert('Registration successful!');--%>
+        <%--window.location.href = '${pageContext.request.contextPath}/auth/login.jsp'; // Redirect to login page--%>
     });
 </script>
 </body>

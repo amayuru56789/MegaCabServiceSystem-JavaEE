@@ -31,8 +31,8 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public Integer findIdByUsername(String userName) {
-        Integer id = userDAO.findIdByUsername(userName);
+    public String findIdByUsername(String userName) {
+        String id = userDAO.findIdByUsername(userName);
         // If ID is not found, throw an exception
         if (id == null) {
             throw new UserNotFoundException("User not found with username: " + userName);

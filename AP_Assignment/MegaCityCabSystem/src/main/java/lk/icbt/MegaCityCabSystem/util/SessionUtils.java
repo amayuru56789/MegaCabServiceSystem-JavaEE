@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 
 public class SessionUtils {
     // Set user session attributes after successful login
-    public static void setUserSession(HttpServletRequest request, String userName, String userRole, int userId) {
+    public static void setUserSession(HttpServletRequest request, String userName, String userRole, String userId) {
         HttpSession session = request.getSession(true);
         session.setAttribute("userName", userName);
         session.setAttribute("userRole", userRole);

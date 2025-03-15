@@ -45,40 +45,91 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
+//    public boolean saveCustomer(Customer entity) throws SQLException, ClassNotFoundException {
+//
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+//        con.setAutoCommit(false); // Start transaction
+//        PreparedStatement pstm = con.prepareStatement("insert into Customer values(?,?,?,?,?,?,?,?,?,?,?,?)");
+//        pstm.setObject(1, entity.getCustomerId());
+//        pstm.setObject(2, entity.getCustomerName());
+//        pstm.setObject(3, entity.getAddress());
+//        pstm.setObject(4, entity.getEmail());
+//        pstm.setObject(5, entity.getTelephoneNo());
+//        pstm.setObject(6, entity.getNic());
+//        pstm.setObject(7, entity.getRegistrationNo());
+//        pstm.setObject(8, entity.getRegistrationDate());
+//        pstm.setObject(9, entity.getUpdatedDate());
+//        pstm.setObject(10, entity.getRegistrationTime());
+//        pstm.setObject(11, entity.getUpdatedTime());
+//        pstm.setObject(12, "2");
+//
+//        // Insert into User table for login authentication
+//        String userQuery = "INSERT INTO User (userName, password) VALUES (?, ?, ?, ?)";
+//        PreparedStatement userPstm = con.prepareStatement(userQuery);
+//        userPstm.setObject(1, "2");
+//        userPstm.setObject(2, entity.getUserName()); // Customer ID as username
+//        userPstm.setObject(3, entity.getPassword()); // Set a default password
+//        userPstm.setObject(4, "customer"); // Assign customer role
+//        int i = userPstm.executeUpdate();
+//
+////        pstm.setObject(7, formatDateTime);
+////        pstm.setObject(8, "");
+//        if (pstm.executeUpdate()>0 && i>0){
+//            con.commit(); // Commit transaction
+//            return true;
+//        }else{
+//            con.rollback(); // Rollback if any insert fails
+//            return false;
+//        }
+//    }
     public boolean saveCustomer(Customer entity) throws SQLException, ClassNotFoundException {
-
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
         con.setAutoCommit(false); // Start transaction
-        PreparedStatement pstm = con.prepareStatement("insert into Customer values(?,?,?,?,?,?,?,?,?,?,?)");
-        pstm.setObject(1, entity.getCustomerId());
-        pstm.setObject(2, entity.getCustomerName());
-        pstm.setObject(3, entity.getAddress());
-        pstm.setObject(4, entity.getEmail());
-        pstm.setObject(5, entity.getTelephoneNo());
-        pstm.setObject(6, entity.getNic());
-        pstm.setObject(7, entity.getRegistrationNo());
-        pstm.setObject(8, entity.getRegistrationDate());
-        pstm.setObject(9, entity.getUpdatedDate());
-        pstm.setObject(10, entity.getRegistrationTime());
-        pstm.setObject(11, entity.getUpdatedTime());
 
-        // Insert into User table for login authentication
-        String userQuery = "INSERT INTO User (userName, password) VALUES (?, ?)";
-        PreparedStatement userPstm = con.prepareStatement(userQuery);
-        userPstm.setObject(1, entity.getUserName()); // Customer ID as username
-        userPstm.setObject(2, entity.getPassword()); // Set a default password
-//        userPstm.setObject(3, "CUSTOMER"); // Assign customer role
-        int i = userPstm.executeUpdate();
+        try {
+            // Insert into Customer table
+            String customerQuery = "INSERT INTO Customer (customerId, customerName, address, email, telephoneNo, nicNo, registrationNo, registrationDate, updatedDate, registrationTime, updatedTime, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstm = con.prepareStatement(customerQuery);
+            pstm.setObject(1, entity.getCustomerId());
+            pstm.setObject(2, entity.getCustomerName());
+            pstm.setObject(3, entity.getAddress());
+            pstm.setObject(4, entity.getEmail());
+            pstm.setObject(5, entity.getTelephoneNo());
+            pstm.setObject(6, entity.getNic());
+            pstm.setObject(7, entity.getRegistrationNo());
+            pstm.setObject(8, entity.getRegistrationDate());
+            pstm.setObject(9, entity.getUpdatedDate());
+            pstm.setObject(10, entity.getRegistrationTime());
+            pstm.setObject(11, entity.getUpdatedTime());
+            pstm.setObject(12, "2"); // Assuming "2" is the status
 
-//        pstm.setObject(7, formatDateTime);
-//        pstm.setObject(8, "");
-        if (pstm.executeUpdate()>0 && i>0){
-            con.commit(); // Commit transaction
-            return true;
-        }else{
-            con.rollback(); // Rollback if any insert fails
-            return false;
+            // Insert into User table for login authentication
+            String userQuery = "INSERT INTO User (userId, userName, password, userrole) VALUES (?, ?, ?, ?)";
+            PreparedStatement userPstm = con.prepareStatement(userQuery);
+            userPstm.setObject(1, entity.getCustomerId()); // Use customerId as userId
+            userPstm.setObject(2, entity.getUserName()); // Username
+            userPstm.setObject(3, entity.getPassword()); // Password
+            userPstm.setObject(4, "customer"); // Role
+
+            // Execute both inserts
+            int customerRows = pstm.executeUpdate();
+            int userRows = userPstm.executeUpdate();
+
+            if (customerRows > 0 && userRows > 0) {
+                con.commit(); // Commit transaction
+                return true;
+            } else {
+                con.rollback(); // Rollback if any insert fails
+                return false;
+            }
+        } catch (SQLException e) {
+            con.rollback(); // Rollback on error
+            throw e;
+        } finally {
+            con.setAutoCommit(true); // Reset auto-commit
+            con.close(); // Close the connection
         }
     }
 

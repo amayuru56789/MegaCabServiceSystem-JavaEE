@@ -44,6 +44,7 @@ public class UserDAOImpl implements UserDAO {
             String query = "select * from User where userName=? ";
              pstm = con.prepareStatement(query);
             pstm.setObject(1, userName);
+//            pstm.setObject(2, id);
             rst = pstm.executeQuery();
 
             if (rst.next()){
@@ -70,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Integer findIdByUsername(String userName) {
+    public String findIdByUsername(String userName) {
         ResultSet rst = null;
         PreparedStatement pstm = null;
         Connection con = null;
@@ -84,7 +85,7 @@ public class UserDAOImpl implements UserDAO {
             rst = pstm.executeQuery();
 
             if (rst.next()){
-                return rst.getInt("userid"); // Return the role
+                return rst.getString("userid"); // Return the role
             }else{
                 return null; // Return null if no user is found
             }

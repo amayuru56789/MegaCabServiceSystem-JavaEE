@@ -64,6 +64,7 @@
                         <div class="mb-3">
                             <label for="role" class="form-label">Login As</label>
                             <select class="form-select" id="role" name="role" required>
+                                <option value="customer">Customer</option>
                                 <option value="admin">Admin</option>
                                 <option value="driver">Driver</option>
                             </select>
@@ -73,7 +74,7 @@
                         </div>
                     </form>
                     <div class="text-center mt-3">
-                        <a href="${pageContext.request.contextPath}/customer/register.jsp">Register as a Customer</a>
+                        <a href="${pageContext.request.contextPath}/customer/register">Register as a Customer</a>
                     </div>
                 </div>
             </div>

@@ -53,7 +53,7 @@ public class UserLoginServlet extends HttpServlet {
         if (equal){
             // Get user role and ID (you'll need to modify UserBO to get these)
             String userRole = getUserRole(userName); // Implement this method
-            int userId = getUserId(userName); // Implement this method
+            String userId = getUserId(userName); // Implement this method
 
             // Set user session
             SessionUtils.setUserSession(req, userName, userRole, userId);
@@ -87,7 +87,7 @@ public class UserLoginServlet extends HttpServlet {
 
         if (isValid && hasRole) {
             // Get user ID (you'll need to modify UserBO to get this)
-            int userId = getUserId(userName); // Implement this method
+            String userId = getUserId(userName); // Implement this method
 
             // Set user session
             SessionUtils.setUserSession(req, userName, role, userId);
@@ -116,7 +116,7 @@ public class UserLoginServlet extends HttpServlet {
         return roleByUsername;
     }
 
-    private int getUserId(String userName) {
+    private String getUserId(String userName) {
         // Implement this to get user ID from your database
         // For example: return userDAO.findIdByUsername(userName);
 
@@ -129,7 +129,7 @@ public class UserLoginServlet extends HttpServlet {
     private boolean validateUserRole(String userName, String claimedRole) {
         // Implement this to validate if the user has the claimed role
         String actualRole = getUserRole(userName);
-        return actualRole.equals(claimedRole);
+        return actualRole.equalsIgnoreCase(claimedRole);
     }
 
     private String getRedirectUrl(String userRole, String contextPath) {
