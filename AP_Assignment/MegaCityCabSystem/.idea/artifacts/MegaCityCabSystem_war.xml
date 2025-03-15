@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="MegaCityCabSystem:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>MegaCityCabSystem</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="MegaCityCabSystem.war">
+      <element id="artifact" artifact-name="MegaCityCabSystem:war exploded" />
+    </root>
+  </artifact>
+</component>

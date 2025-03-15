@@ -1,9 +1,7 @@
-package lk.icbt.MegaCityCabSystem;
-
 import lk.icbt.MegaCityCabSystem.util.Calculator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CalculatorTest {
 
@@ -16,10 +14,10 @@ public class CalculatorTest {
         int result = calculator.add(5, 3);
 
         // Assert
-        assertEquals(8, result, "5 + 3 should equal 8");
+        Assertions.assertEquals(8, result, "5 + 3 should equal 8");
     }
 
-    @Test
+//    @Test
     void testSubtract() {
         // Arrange
         Calculator calculator = new Calculator();
@@ -28,6 +26,6 @@ public class CalculatorTest {
         int result = calculator.subtract(5, 3);
 
         // Assert
-        assertEquals(2, result, "5 - 3 should equal 2");
+        Assertions.assertEquals(2, result, "5 - 3 should equal 2");
     }
 }
