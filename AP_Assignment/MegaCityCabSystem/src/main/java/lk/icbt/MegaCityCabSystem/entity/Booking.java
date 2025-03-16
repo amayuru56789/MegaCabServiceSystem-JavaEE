@@ -14,11 +14,14 @@ public class Booking {
     private String destination;
     private String destinationDetails;
     private String activityStatus;
+    private Date pickupDateTime;
+    private String pickupAddress;
+    private String distance;
 
     public Booking() {
     }
 
-    public Booking(String bookingId, String customerId, String cabId, String registrationNo, Date bookingDate, String bookingTime, Date lastUpdatedDate, String lastUpdatedTime, String destination, String destinationDetails, String activityStatus) {
+    public Booking(String bookingId, String customerId, String cabId, String registrationNo, Date bookingDate, String bookingTime, Date lastUpdatedDate, String lastUpdatedTime, String destination, String destinationDetails, String activityStatus, Date pickupDateTime, String pickupAddress, String distance) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.cabId = cabId;
@@ -30,6 +33,9 @@ public class Booking {
         this.destination = destination;
         this.destinationDetails = destinationDetails;
         this.activityStatus = activityStatus;
+        this.pickupDateTime = pickupDateTime;
+        this.pickupAddress = pickupAddress;
+        this.distance = distance;
     }
 
     public String getBookingId() {
@@ -118,5 +124,29 @@ public class Booking {
 
     public void setActivityStatus(String activityStatus) {
         this.activityStatus = activityStatus;
+    }
+
+    public Date getPickupDateTime() {
+        return pickupDateTime;
+    }
+
+    public void setPickupDateTime(Date pickupDateTime) {
+        this.pickupDateTime = pickupDateTime;
+    }
+
+    public String getPickupAddress() {
+        return pickupAddress;
+    }
+
+    public void setPickupAddress(String pickupAddress) {
+        this.pickupAddress = pickupAddress;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }

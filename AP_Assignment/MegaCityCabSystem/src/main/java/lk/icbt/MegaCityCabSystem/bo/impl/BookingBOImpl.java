@@ -38,7 +38,10 @@ public class BookingBOImpl implements BookingBO {
                             booking.getLastUpdatedTime(),
                             booking.getDestination(),
                             booking.getDestinationDetails(),
-                            booking.getActivityStatus()
+                            booking.getActivityStatus(),
+                            booking.getPickupDateTime(),
+                            booking.getPickupAddress(),
+                            booking.getDistance()
                     ))
                     .collect(Collectors.toCollection(ArrayList::new));
 
@@ -76,7 +79,10 @@ public class BookingBOImpl implements BookingBO {
                     bookingDTO.getLastUpdatedTime(),
                     bookingDTO.getDestination(),
                     bookingDTO.getDestinationDetails(),
-                    bookingDTO.getActivityStatus()
+                    bookingDTO.getActivityStatus(),
+                    bookingDTO.getPickupDateTime(),
+                    bookingDTO.getPickupAddress(),
+                    bookingDTO.getDistance()
 
             ));
         } catch (SQLException e) {
@@ -106,7 +112,10 @@ public class BookingBOImpl implements BookingBO {
                     bookingDTO.getLastUpdatedTime(),
                     bookingDTO.getDestination(),
                     bookingDTO.getDestinationDetails(),
-                    bookingDTO.getActivityStatus()
+                    bookingDTO.getActivityStatus(),
+                    bookingDTO.getPickupDateTime(),
+                    bookingDTO.getPickupAddress(),
+                    bookingDTO.getDistance()
             ));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -153,7 +162,10 @@ public class BookingBOImpl implements BookingBO {
                         searchBooking.getLastUpdatedTime(),
                         searchBooking.getDestination(),
                         searchBooking.getDestinationDetails(),
-                        searchBooking.getActivityStatus()
+                        searchBooking.getActivityStatus(),
+                        searchBooking.getPickupDateTime(),
+                        searchBooking.getPickupAddress(),
+                        searchBooking.getDistance()
                 );
 
             }else{

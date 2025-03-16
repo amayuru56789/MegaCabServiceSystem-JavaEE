@@ -101,7 +101,7 @@
             <h3>Quick Actions</h3>
             <div class="row">
                 <div class="col-md-4">
-                    <a href="${pageContext.request.contextPath}/customer/book-cab.jsp" class="quick-link-card">
+                    <a href="${pageContext.request.contextPath}/customer/book-cab" class="quick-link-card">
                         <h4>Book a Cab</h4>
                         <p>Book a cab for your journey</p>
                     </a>
