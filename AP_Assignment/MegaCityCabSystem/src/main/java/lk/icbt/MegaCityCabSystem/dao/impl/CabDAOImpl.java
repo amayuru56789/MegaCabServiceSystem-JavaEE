@@ -1,6 +1,7 @@
 package lk.icbt.MegaCityCabSystem.dao.impl;
 
 import lk.icbt.MegaCityCabSystem.dao.CabDAO;
+import lk.icbt.MegaCityCabSystem.db.DbConfiguration;
 import lk.icbt.MegaCityCabSystem.entity.Cab;
 import lk.icbt.MegaCityCabSystem.entity.Customer;
 
@@ -27,7 +28,8 @@ public class CabDAOImpl implements CabDAO {
                     rst.getString(4),
                     rst.getDouble(5),
                     rst.getString(6),
-                    "empty"
+                    "empty",
+                    rst.getBytes(7)
             );
             cabs.add(cab);
         }
@@ -36,24 +38,45 @@ public class CabDAOImpl implements CabDAO {
     }
 
     @Override
-    public boolean saveCab(Cab entity) throws SQLException, ClassNotFoundException {
+//    public boolean saveCab(Cab entity) throws SQLException, ClassNotFoundException {
+//
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+//        con.setAutoCommit(false); // Start transaction
+//        PreparedStatement pstm = con.prepareStatement("insert into Cab values(?,?,?,?,?,?,?)");
+//        pstm.setObject(1, entity.getCabID());
+//        pstm.setObject(2, entity.getModel());
+//        pstm.setObject(3, entity.getMileage());
+//        pstm.setObject(4, entity.getAvailableStatus());
+//        pstm.setObject(5, entity.getPrice());
+//        pstm.setObject(6, entity.getCapacity());
+//        pstm.setObject(7, entity.getImgByte());
+//
+//        if (pstm.executeUpdate()>0){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
+    public boolean saveCab(Cab entity) throws ClassNotFoundException, SQLException {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
-        con.setAutoCommit(false); // Start transaction
-        PreparedStatement pstm = con.prepareStatement("insert into Cab values(?,?,?,?,?,?)");
-        pstm.setObject(1, entity.getCabID());
-        pstm.setObject(2, entity.getModel());
-        pstm.setObject(3, entity.getMileage());
-        pstm.setObject(4, entity.getAvailableStatus());
-        pstm.setObject(5, entity.getPrice());
-        pstm.setObject(6, entity.getCapacity());
+        String query = "INSERT INTO cab (cabId, model, milage, availablestatus, price, capacity, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        if (pstm.executeUpdate()>0){
-            return true;
-        }else{
-            return false;
-        }
+        PreparedStatement pstm = con.prepareStatement(query);
+
+            pstm.setString(1, entity.getCabID());
+            pstm.setString(2, entity.getModel());
+            pstm.setString(3, entity.getMileage());
+            pstm.setString(4, entity.getAvailableStatus());
+            pstm.setDouble(5, entity.getPrice());
+            pstm.setString(6, entity.getCapacity());
+            pstm.setBytes(7, entity.getImgByte()); // Set image as BLOB
+
+            int rowsAffected = pstm.executeUpdate();
+            return rowsAffected > 0 ? true : false;
+
     }
 
     @Override
@@ -112,7 +135,8 @@ public class CabDAOImpl implements CabDAO {
                     rst.getString(4),
                     rst.getDouble(5),
                     rst.getString(6),
-                    "empty"
+                    "empty",
+                    rst.getBytes(7)
             );
         }else{
             return null;

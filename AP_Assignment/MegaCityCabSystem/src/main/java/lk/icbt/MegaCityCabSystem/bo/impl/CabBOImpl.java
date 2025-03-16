@@ -34,7 +34,8 @@ public class CabBOImpl implements CabBO {
                                 cab.getAvailableStatus(),
                                 cab.getPrice(),
                                 cab.getCapacity(),
-                                "empty"
+                                "empty",
+                                cab.getImgByte()
                         )
                 );
             }
@@ -62,7 +63,8 @@ public class CabBOImpl implements CabBO {
                     cabDTO.getAvailableStatus(),
                     cabDTO.getPrice(),
                     cabDTO.getCapacity(),
-                   "empty"
+                   "empty",
+                    cabDTO.getImgByte()
             ));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,7 +85,8 @@ public class CabBOImpl implements CabBO {
                     cabDTO.getAvailableStatus(),
                     cabDTO.getPrice(),
                     cabDTO.getCapacity(),
-                    "empty"
+                    "empty",
+                    cabDTO.getImgByte()
             ));
 
         } catch (SQLException e) {
@@ -128,7 +131,8 @@ public class CabBOImpl implements CabBO {
                         searchCab.getAvailableStatus(),
                         searchCab.getPrice(),
                         searchCab.getCapacity(),
-                        "empty"
+                        "empty",
+                        searchCab.getImgByte()
                 );
 
             }else{
