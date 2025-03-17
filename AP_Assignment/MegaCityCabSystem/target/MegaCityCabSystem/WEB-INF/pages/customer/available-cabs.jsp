@@ -112,35 +112,45 @@
     <div class="row">
         <div class="col-12">
             <div class="cab-grid">
-                <%--<c:forEach items="${availableCabs}" var="cab">--%>
-                    <%--<div class="cab-card">--%>
-                        <%--<div class="cab-image">--%>
-                            <%--<!-- In a real application, you would have actual cab images -->--%>
+                <c:forEach items="${availableCabs}" var="cab">
+                    <div class="cab-card">
+                        <div class="cab-image">
+                            <!-- Display the Base64-encoded image -->
+                            <c:choose>
+                                <c:when test="${not empty cab.base64Image}">
+                                    <img src="data:image/jpeg;base64,${cab.base64Image}" alt="${cab.model}">
+                                </c:when>
+                                <c:otherwise>
+                                    <!-- Fallback image if no image is available -->
+                                    <img src="${pageContext.request.contextPath}/images/default-cab.jpg" alt="${cab.model}">
+                                </c:otherwise>
+                            </c:choose>
+                            <!-- In a real application, you would have actual cab images -->
                             <%--<img src="${pageContext.request.contextPath}/images/cab-${cab.type}.jpg" alt="${cab.model}">--%>
-                        <%--</div>--%>
-                        <%--<div class="cab-details">--%>
-                            <%--<h3>${cab.model}</h3>--%>
+                        </div>
+                        <div class="cab-details">
+                            <h3>${cab.model}</h3>
                             <%--<p><strong>Type:</strong> ${cab.typeName}</p>--%>
-                            <%--<p><strong>Capacity:</strong> ${cab.capacity} passengers</p>--%>
-                            <%--<p><strong>Rating:</strong>--%>
-                                <%--<span class="rating">--%>
+                            <p><strong>Capacity:</strong> ${cab.capacity} passengers</p>
+                            <p><strong>Rating:</strong>
+                                <span class="rating">
                                         <%--<c:forEach begin="1" end="5" var="i">--%>
                                             <%--<c:choose>--%>
                                                 <%--<c:when test="${i <= cab.rating}">★</c:when>--%>
                                                 <%--<c:otherwise>☆</c:otherwise>--%>
                                             <%--</c:choose>--%>
                                         <%--</c:forEach>--%>
-                                    <%--</span>--%>
+                                    </span>
                                 <%--(${cab.rating}/5)--%>
-                            <%--</p>--%>
+                            </p>
                             <%--<p><strong>Base Fare:</strong> $${cab.baseFare}</p>--%>
                             <%--<p><strong>Per KM Rate:</strong> $${cab.perKmRate}</p>--%>
-                        <%--</div>--%>
-                        <%--<div class="cab-actions">--%>
+                        </div>
+                        <div class="cab-actions">
                             <%--<a href="${pageContext.request.contextPath}/customer/book-cab.jsp?cabId=${cab.id}" class="btn btn-success">Book Now</a>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</c:forEach>--%>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>

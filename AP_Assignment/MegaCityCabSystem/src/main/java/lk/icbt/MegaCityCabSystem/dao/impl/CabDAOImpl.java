@@ -29,7 +29,7 @@ public class CabDAOImpl implements CabDAO {
                     rst.getDouble(5),
                     rst.getString(6),
                     "empty",
-                    rst.getBytes(7)
+                    rst.getBytes(8)
             );
             cabs.add(cab);
         }

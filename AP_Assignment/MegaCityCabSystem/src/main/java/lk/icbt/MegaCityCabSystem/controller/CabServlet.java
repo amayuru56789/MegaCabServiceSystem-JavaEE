@@ -5,10 +5,7 @@ import lk.icbt.MegaCityCabSystem.bo.impl.CabBOImpl;
 import lk.icbt.MegaCityCabSystem.dao.CabDAO;
 import lk.icbt.MegaCityCabSystem.dto.CabDTO;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +17,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Base64;
 
 @WebServlet(name = "CabServlet", urlPatterns = {"/cab"})
 @MultipartConfig // Required for file uploads
@@ -30,7 +29,36 @@ public class CabServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log("cab servlet print msg get method");
-        super.doGet(req, resp);
+
+        resp.setContentType("application/json");
+
+        PrintWriter writer = resp.getWriter();
+
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+        ArrayList<CabDTO> allCab = cabBO.getAllCab();
+        for (CabDTO dto: allCab
+             ) {
+            JsonObjectBuilder obj = Json.createObjectBuilder();
+            obj.add("cabId", dto.getCabID());
+            obj.add("cabType", dto.getModel());
+            obj.add("mileage", dto.getMileage());
+            obj.add("status", dto.getAvailableStatus());
+            obj.add("price", dto.getPrice());
+            obj.add("capacity", dto.getCapacity());
+//            obj.add("imgByte", dto.getImgByte());
+
+            // Encode the imgByte array to a Base64 string and add it to the JSON object
+            if (dto.getImgByte() != null) {
+                String imgBase64 = Base64.getEncoder().encodeToString(dto.getImgByte());
+                obj.add("imgByte", imgBase64);
+            } else {
+                obj.add("imgByte", "--"); // Add an empty string if imgByte is null
+            }
+            arrayBuilder.add(obj.build());
+        }
+
+        writer.print(arrayBuilder.build());
     }
 
     @Override

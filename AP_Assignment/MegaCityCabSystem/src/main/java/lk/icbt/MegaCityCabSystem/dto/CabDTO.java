@@ -9,6 +9,8 @@ public class CabDTO {
     private String capacity;
     private String imgPath;
     private byte[] imgByte;
+    private String base64Image; // Base64-encoded image string
+
 
     public CabDTO() {
     }
@@ -89,6 +91,14 @@ public class CabDTO {
 
     public void setImgByte(byte[] imgByte) {
         this.imgByte = imgByte;
+    }
+
+    public String getBase64Image() {
+        return base64Image;
+    }
+
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 
     @Override
