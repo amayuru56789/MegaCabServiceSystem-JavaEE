@@ -2,6 +2,7 @@ package lk.icbt.MegaCityCabSystem.dao.impl;
 
 import lk.icbt.MegaCityCabSystem.dao.BookingDAO;
 import lk.icbt.MegaCityCabSystem.db.DbConfiguration;
+import lk.icbt.MegaCityCabSystem.dto.BookingCommonDTO;
 import lk.icbt.MegaCityCabSystem.dto.CommonDTO;
 import lk.icbt.MegaCityCabSystem.entity.Booking;
 import lk.icbt.MegaCityCabSystem.entity.Cab;
@@ -224,6 +225,81 @@ public class BookingDAOImpl implements BookingDAO {
 //        }
 
         return cabList;
+
+    }
+
+    public BookingCommonDTO getBookingBaseStatus(String status) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+        // Prepare the SQL query to fetch booking details along with customer name
+        String query = "SELECT b.*, c.customerName, c.telephoneNo " +
+                "FROM Booking b " +
+                "JOIN Customer c ON b.customerId = c.customerId " +
+                "WHERE b.activitystatus = ?";
+
+        try (PreparedStatement pstm = con.prepareStatement(query)) {
+            pstm.setString(1, status); // Set the booking ID parameter
+
+            // Execute the query
+            try (ResultSet rst = pstm.executeQuery()) {
+                if (rst.next()) {
+                    // Create and return a Booking object with the fetched data
+                    return new BookingCommonDTO(
+                            rst.getString("bookingId"),
+                            rst.getString("customerId"),
+                            rst.getString("customerName"), // Fetch customer name
+                            rst.getString("telephoneNo"),
+                            rst.getString("destination"),
+                            rst.getString("destinationDetail"),
+                            rst.getString("activityStatus"),
+                            rst.getDate("pickupDateTime"),
+                            rst.getString("pickupAddress"),
+                            rst.getString("distance")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<BookingCommonDTO> getAllBookingList(String status) throws SQLException, ClassNotFoundException {
+
+        List<BookingCommonDTO> bookings = new ArrayList<>();
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+
+        String query = "SELECT b.*, c.customerName, c.telephoneNo " +
+                "FROM Booking b " +
+                "JOIN Customer c ON b.customerId = c.customerId " +
+                "WHERE b.activitystatus = ?";
+
+        try (PreparedStatement pstm = con.prepareStatement(query)) {
+            pstm.setString(1, status); // Set the status parameter
+
+            // Execute the query
+            try (ResultSet rst = pstm.executeQuery()) {
+                // Iterate through the ResultSet to fetch all matching records
+                while (rst.next()) {
+                    // Create a BookingCommonDTO object for each record
+                    BookingCommonDTO booking = new BookingCommonDTO(
+                            rst.getString("bookingId"),
+                            rst.getString("customerId"),
+                            rst.getString("customerName"), // Fetch customer name
+                            rst.getString("telephoneNo"),
+                            rst.getString("destination"),
+                            rst.getString("destinationDetail"),
+                            rst.getString("activityStatus"),
+                            rst.getDate("pickupDateTime"),
+                            rst.getString("pickupAddress"),
+                            rst.getString("distance")
+                    );
+                    // Add the booking to the list
+                    bookings.add(booking);
+                }
+            }
+        }
+        return bookings;
 
     }
 }

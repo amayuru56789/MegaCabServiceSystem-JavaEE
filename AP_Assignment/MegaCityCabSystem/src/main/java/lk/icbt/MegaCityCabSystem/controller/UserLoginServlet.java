@@ -137,7 +137,7 @@ public class UserLoginServlet extends HttpServlet {
             case "admin":
                 return contextPath + "/admin-form";
             case "driver":
-                return contextPath + "/driver/dashboard.jsp";
+                return contextPath + "/driver/dashboard";
             case "customer":
                 return contextPath + "/customer-form";
             default:

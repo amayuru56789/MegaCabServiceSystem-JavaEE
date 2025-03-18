@@ -144,4 +144,16 @@ public class DriverBOImpl implements DriverBO {
         return new DriverDTO();
 
     }
+
+    @Override
+    public String getDriverStatus(String userId) {
+        try {
+            return driverDAO.getDriverStatus(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

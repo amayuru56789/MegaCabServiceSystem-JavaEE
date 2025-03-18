@@ -14,5 +14,6 @@ public interface DriverDAO {
     boolean deleteDriver(String id) throws SQLException, ClassNotFoundException;
     boolean ifDriverExists(String id) throws SQLException, ClassNotFoundException;
     public Driver searchDriver(String driverID) throws SQLException, ClassNotFoundException;
+    public String getDriverStatus(String userID) throws SQLException, ClassNotFoundException;
 
 }

@@ -177,7 +177,7 @@ public class DriverDAOImpl implements DriverDAO {
     @Override
     public Driver searchDriver(String driverID) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/epic", "root", "1234");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
         PreparedStatement pstm = con.prepareStatement("select * from Driver where driverId=?");
         pstm.setObject(1, driverID);
         ResultSet rst = pstm.executeQuery();
@@ -195,6 +195,38 @@ public class DriverDAOImpl implements DriverDAO {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public String getDriverStatus(String userID) throws SQLException, ClassNotFoundException {
+
+        String status = null;
+
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+            PreparedStatement pstm = con.prepareStatement("select * from Driver where userId=?");
+            pstm.setObject(1, userID);
+            ResultSet rst = pstm.executeQuery();
+
+            if (rst.next()) {
+                status = rst.getString("status"); // Fetch the status column value
+            } else {
+                status = "NOT_FOUND"; // If no record is found for the given userID
+            }
+
+            // Close resources
+            rst.close();
+            pstm.close();
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = "ERROR";
+        }
+
+        return status;
     }
 
 }

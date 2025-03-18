@@ -121,6 +121,16 @@
     <url-pattern>/customer/book-cab</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>DriverDashboardPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.DriverDashboardPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DriverDashboardPageServlet</servlet-name>
+    <url-pattern>/driver/dashboard</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>

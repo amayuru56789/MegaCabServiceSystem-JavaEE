@@ -19,4 +19,6 @@ public interface DriverBO {
 
     public DriverDTO searchDriver(String driverID);
 
+    String getDriverStatus(String userId);
+
 }
