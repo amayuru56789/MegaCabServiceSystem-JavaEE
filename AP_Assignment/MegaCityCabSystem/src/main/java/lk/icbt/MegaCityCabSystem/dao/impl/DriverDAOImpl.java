@@ -229,4 +229,30 @@ public class DriverDAOImpl implements DriverDAO {
         return status;
     }
 
+    @Override
+    public String findByUserName(String userName) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        // SQL query to fetch the driverId based on userName
+        String query = "SELECT driverId FROM Driver WHERE driverName = ?";
+
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+             PreparedStatement pstm = con.prepareStatement(query)) {
+
+            // Set the userName parameter
+            pstm.setString(1, userName);
+
+            // Execute the query
+            try (ResultSet rst = pstm.executeQuery()) {
+                if (rst.next()) {
+                    // Return the driverId
+                    return rst.getString("driverId");
+                }
+            }
+        }
+
+        // Return null if no driver is found
+        return null;
+    }
+
 }

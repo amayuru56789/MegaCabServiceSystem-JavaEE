@@ -105,6 +105,31 @@ div class="container-fluid mt-4">
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-center mt-3">
+                                            <c:if test="${not empty param.message}">
+                                                <div class="alert alert-success">
+                                                    <c:choose>
+                                                        <c:when test="${param.message == 'StatusUpdated'}">
+                                                            Booking status updated successfully!
+                                                        </c:when>
+                                                    </c:choose>
+                                                </div>
+                                            </c:if>
+
+                                            <c:if test="${not empty param.error}">
+                                                <div class="alert alert-danger">
+                                                    <c:choose>
+                                                        <c:when test="${param.error == 'UpdateFailed'}">
+                                                            Failed to update booking status. Please try again.
+                                                        </c:when>
+                                                        <c:when test="${param.error == 'DatabaseError'}">
+                                                            A database error occurred. Please contact support.
+                                                        </c:when>
+                                                        <c:when test="${param.error == 'InvalidParameters'}">
+                                                            Invalid parameters. Please try again.
+                                                        </c:when>
+                                                    </c:choose>
+                                                </div>
+                                            </c:if>
                                             <c:choose>
                                                 <c:when test="${currentBooking.activityStatus == 'ASSIGNED'}">
                                                     <a href="${pageContext.request.contextPath}/driver/bookings/updateStatus?id=${currentBooking.bookingNumber}&status=IN_PROGRESS" class="btn btn-primary me-2">
@@ -154,6 +179,33 @@ div class="container-fluid mt-4">
                                 </a>
                             </div>
                             <div class="card-body">
+                                <!-- Display Success and Error Messages -->
+                                <c:if test="${not empty param.message}">
+                                    <div class="alert alert-success">
+                                        <c:choose>
+                                            <c:when test="${param.message == 'BookingConfirmed'}">
+                                                Booking confirmed successfully!
+                                            </c:when>
+                                        </c:choose>
+                                    </div>
+                                </c:if>
+
+                                <c:if test="${not empty param.error}">
+                                    <div class="alert alert-danger">
+                                        <c:choose>
+                                            <c:when test="${param.error == 'UpdateFailed'}">
+                                                Failed to update booking status. Please try again.
+                                            </c:when>
+                                            <c:when test="${param.error == 'DatabaseError'}">
+                                                A database error occurred. Please contact support.
+                                            </c:when>
+                                            <c:when test="${param.error == 'InvalidBookingId'}">
+                                                Invalid booking ID. Please try again.
+                                            </c:when>
+                                        </c:choose>
+                                    </div>
+                                </c:if>
+
                                 <c:choose>
                                     <c:when test="${not empty upcomingBookings}">
                                         <div class="table-responsive">

@@ -21,4 +21,6 @@ public interface DriverBO {
 
     String getDriverStatus(String userId);
 
+    String driverFindByUserName(String userName);
+
 }

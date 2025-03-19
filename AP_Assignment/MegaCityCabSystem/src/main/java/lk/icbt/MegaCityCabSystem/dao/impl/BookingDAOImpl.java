@@ -140,6 +140,26 @@ public class BookingDAOImpl implements BookingDAO {
         return null;
     }
 
+    @Override
+    public boolean updateBookingStatus(String bookingId, String status) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String query = "UPDATE Booking SET activityStatus = ? WHERE bookingId = ?";
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+             PreparedStatement pstm = con.prepareStatement(query)) {
+
+            // Set parameters
+            pstm.setString(1, status);
+            pstm.setString(2, bookingId);
+
+            // Execute the update
+            int rowsUpdated = pstm.executeUpdate();
+
+            // Return true if at least one row was updated
+            return rowsUpdated > 0;
+        }
+    }
+
+
     public List<CommonDTO> getAllCustomerDes() throws ClassNotFoundException, SQLException {
         List<CommonDTO> customerList = new ArrayList<>();
         String query = "SELECT * FROM customer WHERE userId = ?"; // Query with parameter
@@ -228,17 +248,30 @@ public class BookingDAOImpl implements BookingDAO {
 
     }
 
-    public BookingCommonDTO getBookingBaseStatus(String status) throws SQLException, ClassNotFoundException {
+    public BookingCommonDTO getBookingBaseStatus(String driverId) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
         // Prepare the SQL query to fetch booking details along with customer name
+//        String query = "SELECT b.*, c.customerName, c.telephoneNo " +
+//                "FROM Booking b " +
+//                "JOIN Customer c ON b.customerId = c.customerId " +
+//                "WHERE b.activitystatus = ?";
+//        String query = "SELECT b.*, c.customerName, c.telephoneNo " +
+//                "FROM Booking b " +
+//                "JOIN Customer c ON b.customerId = c.customerId " +
+//                "WHERE b.driverId = ? AND b.activityStatus IN ('ASSIGNED', 'IN_PROGRESS', 'PICKED_UP') " +
+//                "ORDER BY b.pickupDateTime DESC " +
+//                "LIMIT 1";
         String query = "SELECT b.*, c.customerName, c.telephoneNo " +
                 "FROM Booking b " +
                 "JOIN Customer c ON b.customerId = c.customerId " +
-                "WHERE b.activitystatus = ?";
+                "JOIN Cab cab ON b.cabId = cab.cabId " + // Join the Cab table
+                "WHERE cab.driverId = ? AND b.activityStatus IN ('ASSIGNED', 'IN_PROGRESS', 'PICKED_UP') " +
+                "ORDER BY b.pickupDateTime DESC " +
+                "LIMIT 1";
 
         try (PreparedStatement pstm = con.prepareStatement(query)) {
-            pstm.setString(1, status); // Set the booking ID parameter
+            pstm.setString(1, driverId); // Set the booking ID parameter
 
             // Execute the query
             try (ResultSet rst = pstm.executeQuery()) {

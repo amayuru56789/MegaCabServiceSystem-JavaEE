@@ -19,4 +19,6 @@ public interface BookingDAO {
     boolean ifBookingExists(String id) throws SQLException, ClassNotFoundException;
 
     public Booking searchBooking(String bookID) throws SQLException, ClassNotFoundException;
+
+    public boolean updateBookingStatus(String bookingId, String status) throws ClassNotFoundException, SQLException;
 }

@@ -156,4 +156,16 @@ public class DriverBOImpl implements DriverBO {
         }
         return null;
     }
+
+    @Override
+    public String driverFindByUserName(String userName) {
+        try {
+            return driverDAO.findByUserName(userName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -25,9 +25,15 @@ public class DriverDashboardPageServlet extends HttpServlet {
 
         BookingDAOImpl bookingDAO = new BookingDAOImpl();
 
+        String userId = (String) req.getSession().getAttribute("userId");
+        String userName = (String) req.getSession().getAttribute("userName");
+
+        String driverId = driverBO.driverFindByUserName(userName);
+
+        System.out.println("user ID "+userId+" print driver id "+driverId);
         String driverStatus = driverBO.getDriverStatus("3");
         try {
-            BookingCommonDTO commonDTO = bookingDAO.getBookingBaseStatus("ASSIGNED");
+            BookingCommonDTO commonDTO = bookingDAO.getBookingBaseStatus("D002");
             List<BookingCommonDTO> allBookingList = bookingDAO.getAllBookingList("pending");
 
 
