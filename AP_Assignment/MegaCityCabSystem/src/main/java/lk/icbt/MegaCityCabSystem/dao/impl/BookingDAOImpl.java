@@ -295,6 +295,40 @@ public class BookingDAOImpl implements BookingDAO {
         return null;
     }
 
+    public BookingCommonDTO getBookingDetailsBaseBookId(String bookId) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+
+        String query = "SELECT b.*, c.customerName, c.telephoneNo " +
+                "FROM Booking b " +
+                "JOIN Customer c ON b.customerId = c.customerId " +
+                "WHERE b.bookingId = ?  ";
+
+        try (PreparedStatement pstm = con.prepareStatement(query)) {
+            pstm.setString(1, bookId); // Set the booking ID parameter
+
+            // Execute the query
+            try (ResultSet rst = pstm.executeQuery()) {
+                if (rst.next()) {
+                    // Create and return a Booking object with the fetched data
+                    return new BookingCommonDTO(
+                            rst.getString("bookingId"),
+                            rst.getString("customerId"),
+                            rst.getString("customerName"), // Fetch customer name
+                            rst.getString("telephoneNo"),
+                            rst.getString("destination"),
+                            rst.getString("destinationDetail"),
+                            rst.getString("activityStatus"),
+                            rst.getDate("pickupDateTime"),
+                            rst.getString("pickupAddress"),
+                            rst.getString("distance")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
     public List<BookingCommonDTO> getAllBookingList(String status) throws SQLException, ClassNotFoundException {
 
         List<BookingCommonDTO> bookings = new ArrayList<>();

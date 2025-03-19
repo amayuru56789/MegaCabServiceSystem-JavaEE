@@ -64,4 +64,19 @@ public class BookingServlet extends HttpServlet {
             writer.print(response.build());
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        log("booking servlet search method print msg");
+
+        resp.setContentType("application/json");
+
+        PrintWriter writer = resp.getWriter();
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonObject obj = reader.readObject();
+        String bookingID = obj.getString("bookingId");
+
+        bookingBO.searchBooking(bookingID);
+    }
 }

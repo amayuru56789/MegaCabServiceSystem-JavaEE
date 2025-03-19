@@ -131,6 +131,16 @@
     <url-pattern>/driver/dashboard</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>GenerateBillPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.GenerateBillPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>GenerateBillPageServlet</servlet-name>
+    <url-pattern>/admin/bookings/generateBill</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>

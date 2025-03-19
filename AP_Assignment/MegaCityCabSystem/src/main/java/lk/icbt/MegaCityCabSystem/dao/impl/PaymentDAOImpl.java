@@ -16,7 +16,7 @@ public class PaymentDAOImpl implements PaymentDAO {
     public boolean addPayment(Payment entity) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
-        PreparedStatement pstm = con.prepareStatement("insert into Payment values(?,?,?,?)");
+        PreparedStatement pstm = con.prepareStatement("insert into Payment values(?,?,?)");
         pstm.setObject(1, entity.getPaymentId());
         pstm.setObject(2, entity.getBookingId());
         pstm.setObject(3, entity.getTotAmount());

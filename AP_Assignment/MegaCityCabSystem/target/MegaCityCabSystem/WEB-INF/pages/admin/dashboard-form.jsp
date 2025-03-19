@@ -183,7 +183,7 @@
                         <a href="${pageContext.request.contextPath}/admin/drivers-manage" class="list-group-item list-group-item-action">
                             <i class="fas fa-user-plus me-2"></i> Add New Driver
                         </a>
-                        <a href="${pageContext.request.contextPath}/admin/bookings/bill.jsp" class="list-group-item list-group-item-action">
+                        <a href="${pageContext.request.contextPath}/admin/bookings/generateBill" class="list-group-item list-group-item-action">
                             <i class="fas fa-file-invoice-dollar me-2"></i> Generate Bill
                         </a>
                         <a href="${pageContext.request.contextPath}/help.jsp" class="list-group-item list-group-item-action">
