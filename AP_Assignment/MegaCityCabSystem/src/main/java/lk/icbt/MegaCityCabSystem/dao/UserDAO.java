@@ -1,7 +1,9 @@
 package lk.icbt.MegaCityCabSystem.dao;
 
+import lk.icbt.MegaCityCabSystem.entity.User;
+
 public interface UserDAO {
-    boolean checkEqualityUser(String userName, String password);
+    User getUser(String userName);
     String findRoleByUsername(String userName);
     String findIdByUsername(String userName);
 }

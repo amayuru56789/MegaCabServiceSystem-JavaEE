@@ -5,6 +5,7 @@ import lk.icbt.MegaCityCabSystem.dao.CustomerDAO;
 import lk.icbt.MegaCityCabSystem.dao.impl.CustomerDAOImpl;
 import lk.icbt.MegaCityCabSystem.dto.CustomerDTO;
 import lk.icbt.MegaCityCabSystem.entity.Customer;
+import lk.icbt.MegaCityCabSystem.util.security.SHA256Algorithm;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,8 @@ import java.util.UUID;
 public class CustomerBOImpl implements CustomerBO {
 
     CustomerDAO customerDAO = new CustomerDAOImpl();
+
+    SHA256Algorithm sha256Algorithm = new SHA256Algorithm();
 
     @Override
     public ArrayList<CustomerDTO> getAllCustomer() {
@@ -76,7 +79,8 @@ public class CustomerBOImpl implements CustomerBO {
                     customerDTO.getEmail(),
                     customerDTO.getTelephoneNo(),
                     customerDTO.getUserName(),
-                    customerDTO.getPassword(),
+//                    customerDTO.getPassword(),
+                    sha256Algorithm.makeHash(customerDTO.getPassword()),
                     customerDTO.getRegistrationNo(),
                     customerDTO.getRegistrationDate(),
                     customerDTO.getRegistrationTime(),
@@ -86,6 +90,8 @@ public class CustomerBOImpl implements CustomerBO {
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

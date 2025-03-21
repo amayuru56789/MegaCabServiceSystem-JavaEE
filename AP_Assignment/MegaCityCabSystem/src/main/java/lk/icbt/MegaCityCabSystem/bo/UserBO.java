@@ -1,7 +1,9 @@
 package lk.icbt.MegaCityCabSystem.bo;
 
+import lk.icbt.MegaCityCabSystem.entity.User;
+
 public interface UserBO {
-    boolean equalityUser(String user, String password);
+    User getUser(String user);
     String findRoleByUsername(String userName);
     String findIdByUsername(String userName);
 }

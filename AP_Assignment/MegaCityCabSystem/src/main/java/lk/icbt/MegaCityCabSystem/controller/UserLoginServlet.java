@@ -2,7 +2,9 @@ package lk.icbt.MegaCityCabSystem.controller;
 
 import lk.icbt.MegaCityCabSystem.bo.UserBO;
 import lk.icbt.MegaCityCabSystem.bo.impl.UserBOImpl;
+import lk.icbt.MegaCityCabSystem.entity.User;
 import lk.icbt.MegaCityCabSystem.util.SessionUtils;
+import lk.icbt.MegaCityCabSystem.util.security.SHA256Algorithm;
 
 import javax.json.*;
 import javax.servlet.ServletException;
@@ -17,6 +19,8 @@ import java.io.PrintWriter;
 public class UserLoginServlet extends HttpServlet {
 
     UserBO userBO = new UserBOImpl();
+
+    SHA256Algorithm sha256Algorithm = new SHA256Algorithm();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,28 +52,33 @@ public class UserLoginServlet extends HttpServlet {
         String userName = obj.getString("userName");
         String password = obj.getString("password");
 
-        boolean equal = userBO.equalityUser(userName, password);
+        User user = userBO.getUser(userName);
+        try {
+            boolean isMatch = sha256Algorithm.verifyPassword(password, user.getPassword());
 
-        if (equal){
-            // Get user role and ID (you'll need to modify UserBO to get these)
-            String userRole = getUserRole(userName); // Implement this method
-            String userId = getUserId(userName); // Implement this method
+            if (isMatch){
+                // Get user role and ID (you'll need to modify UserBO to get these)
+                String userRole = getUserRole(userName); // Implement this method
+                String userId = getUserId(userName); // Implement this method
 
-            // Set user session
-            SessionUtils.setUserSession(req, userName, userRole, userId);
+                // Set user session
+                SessionUtils.setUserSession(req, userName, userRole, userId);
 
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            response.add("status", 200);
-            response.add("message", "Welcome " +userName+ "! You have successfully logged in.");
-            response.add("userRole", userRole);
-            response.add("redirectUrl", getRedirectUrl(userRole, req.getContextPath()));
-            writer.print(response.build());
-        }else{
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            response.add("status", 400);
-            response.add("message", "Invalid credentials! Please check your username and password.");
-            response.add("data", JsonValue.NULL);
-            writer.print(response.build());
+                JsonObjectBuilder response = Json.createObjectBuilder();
+                response.add("status", 200);
+                response.add("message", "Welcome " +userName+ "! You have successfully logged in.");
+                response.add("userRole", userRole);
+                response.add("redirectUrl", getRedirectUrl(userRole, req.getContextPath()));
+                writer.print(response.build());
+            }else{
+                JsonObjectBuilder response = Json.createObjectBuilder();
+                response.add("status", 400);
+                response.add("message", "Invalid credentials! Please check your username and password.");
+                response.add("data", JsonValue.NULL);
+                writer.print(response.build());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -81,11 +90,18 @@ public class UserLoginServlet extends HttpServlet {
         String role = req.getParameter("role"); // From the form select dropdown
 
         // You'll need to extend your UserBO to validate both username/password and role
-        boolean isValid = userBO.equalityUser(userName, password);
+        User user = userBO.getUser(userName);
+        boolean isMatch = false;
+        try {
+            isMatch = sha256Algorithm.verifyPassword(password, user.getPassword());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Also check if the user has the claimed role
         boolean hasRole = validateUserRole(userName, role); // Implement this method
 
-        if (isValid && hasRole) {
+        if (isMatch && hasRole) {
             // Get user ID (you'll need to modify UserBO to get this)
             String userId = getUserId(userName); // Implement this method
 

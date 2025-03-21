@@ -3,18 +3,19 @@ package lk.icbt.MegaCityCabSystem.bo.impl;
 import lk.icbt.MegaCityCabSystem.bo.UserBO;
 import lk.icbt.MegaCityCabSystem.dao.UserDAO;
 import lk.icbt.MegaCityCabSystem.dao.impl.UserDAOImpl;
+import lk.icbt.MegaCityCabSystem.entity.User;
 
 public class UserBOImpl implements UserBO {
 
     UserDAO userDAO = new UserDAOImpl();
 
     @Override
-    public boolean equalityUser(String user, String password) {
-        boolean equal = userDAO.checkEqualityUser(user, password);
-        if (equal){
-            return true;
+    public User getUser(String user) {
+        User user1 = userDAO.getUser(user);
+        if (user1 != null){
+            return userDAO.getUser(user);
         }else{
-            return false;
+            return userDAO.getUser(user);
         }
     }
 
