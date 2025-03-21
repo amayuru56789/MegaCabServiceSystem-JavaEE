@@ -28,15 +28,15 @@ public class BookingDAOImpl implements BookingDAO {
                     rst.getString(3),
                     rst.getString(4),
                     rst.getDate(5),
+                    rst.getTime(12),
+                    rst.getDate(13),
+                    rst.getTime(14),
                     rst.getString(6),
-                    rst.getDate(7),
+                    rst.getString(7),
                     rst.getString(8),
-                    rst.getString(9),
+                    rst.getTimestamp(9),
                     rst.getString(10),
-                    rst.getString(11),
-                    rst.getDate(12),
-                    rst.getString(13),
-                    rst.getString(14)
+                    rst.getString(11)
             );
             bookings.add(booking);
         }
@@ -126,15 +126,15 @@ public class BookingDAOImpl implements BookingDAO {
                     rst.getString(3),
                     rst.getString(4),
                     rst.getDate(5),
+                    rst.getTime(12),
+                    rst.getDate(13),
+                    rst.getTime(14),
                     rst.getString(6),
-                    rst.getDate(7),
+                    rst.getString(7),
                     rst.getString(8),
-                    rst.getString(9),
+                    rst.getTimestamp(9),
                     rst.getString(10),
-                    rst.getString(11),
-                    rst.getDate(12),
-                    rst.getString(13),
-                    rst.getString(14)
+                    rst.getString(11)
             );
         }
         return null;
@@ -368,5 +368,70 @@ public class BookingDAOImpl implements BookingDAO {
         }
         return bookings;
 
+    }
+
+    public List<BookingCommonDTO> getAllSearchBookingList(Date dateFrom, Date dateTo) throws SQLException, ClassNotFoundException {
+        List<BookingCommonDTO> bookings = new ArrayList<>();
+
+        // Load the MySQL JDBC driver
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        // Establish a connection to the database
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234")) {
+
+            // SQL query to fetch bookings based on status and date range
+//            String query = "SELECT b.*, c.customerName, c.telephoneNo " +
+//                    "FROM Booking b " +
+//                    "JOIN Customer c ON b.customerId = c.customerId " +
+//                    "WHERE b.activitystatus = ? " +
+//                    "AND b.bookingDate BETWEEN ? AND ?";
+            String query = "SELECT b.*, c.customerName, c.telephoneNo " +
+                    "FROM Booking b " +
+                    "JOIN Customer c ON b.customerId = c.customerId " +
+                    "WHERE 1=1";
+
+            // Add date range condition if provided
+            if (dateFrom != null && dateTo != null) {
+                query += " AND b.bookingDate BETWEEN ? AND ?";
+            }
+
+            try (PreparedStatement pstm = con.prepareStatement(query)) {
+
+                int paramIndex = 1;
+
+                // Set date range parameters if provided
+                if (dateFrom != null && dateTo != null) {
+                    pstm.setDate(paramIndex++, new java.sql.Date(dateFrom.getTime()));
+                    pstm.setDate(paramIndex++, new java.sql.Date(dateTo.getTime()));
+                }
+
+                // Set the date range parameters
+//                pstm.setDate(1, new java.sql.Date(dateFrom.getTime())); // Convert java.util.Date to java.sql.Date
+//                pstm.setDate(2, new java.sql.Date(dateTo.getTime()));
+
+                // Execute the query
+                try (ResultSet rst = pstm.executeQuery()) {
+                    // Iterate through the ResultSet to fetch all matching records
+                    while (rst.next()) {
+                        // Create a BookingCommonDTO object for each record
+                        BookingCommonDTO booking = new BookingCommonDTO(
+                                rst.getString("bookingId"),
+                                rst.getString("customerId"),
+                                rst.getString("customerName"), // Fetch customer name
+                                rst.getString("telephoneNo"),
+                                rst.getString("destination"),
+                                rst.getString("destinationDetail"),
+                                rst.getString("activityStatus"),
+                                rst.getDate("pickupDateTime"),
+                                rst.getString("pickupAddress"),
+                                rst.getString("distance")
+                        );
+                        // Add the booking to the list
+                        bookings.add(booking);
+                    }
+                }
+            }
+        }
+        return bookings;
     }
 }

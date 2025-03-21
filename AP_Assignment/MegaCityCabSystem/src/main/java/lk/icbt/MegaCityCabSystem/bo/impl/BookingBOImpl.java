@@ -39,7 +39,8 @@ public class BookingBOImpl implements BookingBO {
                             booking.getDestination(),
                             booking.getDestinationDetails(),
                             booking.getActivityStatus(),
-                            booking.getPickupDateTime(),
+//                            booking.getPickupDateTime(),
+                            null,
                             booking.getPickupAddress(),
                             booking.getDistance()
                     ))
@@ -65,8 +66,8 @@ public class BookingBOImpl implements BookingBO {
             String formattedDate = formatter.format(date);
 
             bookingDTO.setBookingDate(new Date());
-            bookingDTO.setBookingTime(time.toString());
-            bookingDTO.setLastUpdatedTime(time.toString());
+//            bookingDTO.setBookingTime(time.toString());
+//            bookingDTO.setLastUpdatedTime(time.toString());
 
             return bookingDAO.addBooking(new Booking(
                     bookingDTO.getBookingId(),
@@ -99,7 +100,7 @@ public class BookingBOImpl implements BookingBO {
 
             LocalTime time = getCurrentFormattedTime();
             bookingDTO.setLastUpdatedDate(new Date());
-            bookingDTO.setLastUpdatedTime(time.toString());
+//            bookingDTO.setLastUpdatedTime(time.toString());
 
             return bookingDAO.updateBooking(new Booking(
                     bookingDTO.getBookingId(),
@@ -163,7 +164,8 @@ public class BookingBOImpl implements BookingBO {
                         searchBooking.getDestination(),
                         searchBooking.getDestinationDetails(),
                         searchBooking.getActivityStatus(),
-                        searchBooking.getPickupDateTime(),
+//                        searchBooking.getPickupDateTime(),
+                        null,
                         searchBooking.getPickupAddress(),
                         searchBooking.getDistance()
                 );

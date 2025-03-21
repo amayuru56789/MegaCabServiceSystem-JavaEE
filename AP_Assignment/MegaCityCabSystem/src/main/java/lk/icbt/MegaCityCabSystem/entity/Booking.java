@@ -1,5 +1,7 @@
 package lk.icbt.MegaCityCabSystem.entity;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Booking {
@@ -8,20 +10,20 @@ public class Booking {
     private String cabId;
     private String registrationNo;
     private Date bookingDate;
-    private String bookingTime;
+    private Time bookingTime;
     private Date lastUpdatedDate;
-    private String lastUpdatedTime;
+    private Time lastUpdatedTime;
     private String destination;
     private String destinationDetails;
     private String activityStatus;
-    private Date pickupDateTime;
+    private Timestamp pickupDateTime;
     private String pickupAddress;
     private String distance;
 
     public Booking() {
     }
 
-    public Booking(String bookingId, String customerId, String cabId, String registrationNo, Date bookingDate, String bookingTime, Date lastUpdatedDate, String lastUpdatedTime, String destination, String destinationDetails, String activityStatus, Date pickupDateTime, String pickupAddress, String distance) {
+    public Booking(String bookingId, String customerId, String cabId, String registrationNo, Date bookingDate, Time bookingTime, Date lastUpdatedDate, Time lastUpdatedTime, String destination, String destinationDetails, String activityStatus, Timestamp pickupDateTime, String pickupAddress, String distance) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.cabId = cabId;
@@ -78,11 +80,11 @@ public class Booking {
         this.bookingDate = bookingDate;
     }
 
-    public String getBookingTime() {
+    public Time getBookingTime() {
         return bookingTime;
     }
 
-    public void setBookingTime(String bookingTime) {
+    public void setBookingTime(Time bookingTime) {
         this.bookingTime = bookingTime;
     }
 
@@ -94,11 +96,11 @@ public class Booking {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
-    public String getLastUpdatedTime() {
+    public Time getLastUpdatedTime() {
         return lastUpdatedTime;
     }
 
-    public void setLastUpdatedTime(String lastUpdatedTime) {
+    public void setLastUpdatedTime(Time lastUpdatedTime) {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 
@@ -130,7 +132,7 @@ public class Booking {
         return pickupDateTime;
     }
 
-    public void setPickupDateTime(Date pickupDateTime) {
+    public void setPickupDateTime(Timestamp pickupDateTime) {
         this.pickupDateTime = pickupDateTime;
     }
 

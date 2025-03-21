@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -144,14 +145,14 @@
                                 <td>${booking.bookingNumber}</td>
                                 <td>${booking.customerName}</td>
                                 <td>${booking.destination}</td>
-                                <td>${booking.bookingDate}</td>
+                                <%--<td>${booking.bookingDate}</td>--%>
                                 <td>
-                                            <span class="badge bg-${booking.status == 'COMPLETED' ? 'success' : booking.status == 'PENDING' ? 'warning' : 'primary'}">
-                                                    ${booking.status}
+                                            <span class="badge bg-${booking.activityStatus == 'COMPLETED' ? 'success' : booking.activityStatus == 'PENDING' ? 'warning' : 'primary'}">
+                                                    ${booking.activityStatus}
                                             </span>
                                 </td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/bookings/view.jsp?id=${booking.id}" class="btn btn-sm btn-info">
+                                    <a href="${pageContext.request.contextPath}/admin/bookings/view.jsp?id=${booking.bookingNumber}" class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </td>
@@ -161,7 +162,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="${pageContext.request.contextPath}/admin/bookings/list.jsp" class="btn btn-primary">View All Bookings</a>
+                    <a href="${pageContext.request.contextPath}/report/report-summery" class="btn btn-primary">View All Bookings</a>
                 </div>
             </div>
         </div>
@@ -174,10 +175,10 @@
                 </div>
                 <div class="card-body">
                     <div class="list-group">
-                        <a href="${pageContext.request.contextPath}/admin/bookings/add.jsp" class="list-group-item list-group-item-action">
-                            <i class="fas fa-plus me-2"></i> Add New Booking
+                        <a href="${pageContext.request.contextPath}/admin/bookings" class="list-group-item list-group-item-action">
+                            <i class="fas fa-plus me-2"></i> Manage Booking
                         </a>
-                        <a href="${pageContext.request.contextPath}/admin/cars/add.jsp" class="list-group-item list-group-item-action">
+                        <a href="${pageContext.request.contextPath}/admin/manage-cab" class="list-group-item list-group-item-action">
                             <i class="fas fa-car-side me-2"></i> Register New Car
                         </a>
                         <a href="${pageContext.request.contextPath}/admin/drivers-manage" class="list-group-item list-group-item-action">

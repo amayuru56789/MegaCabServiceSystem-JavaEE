@@ -64,6 +64,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>6.20.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -72,7 +78,7 @@
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.1.0</version>
         </plugin>
         <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
         <plugin>
@@ -81,11 +87,11 @@
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
+          <version>3.8.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>2.22.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-war-plugin</artifactId>
@@ -93,7 +99,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>2.5.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
@@ -103,7 +109,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>2.6</version>
+          <version>3.1.0</version>
           <configuration>
             <warSourceExcludes>WEB-INF/lib/**</warSourceExcludes>
           </configuration>

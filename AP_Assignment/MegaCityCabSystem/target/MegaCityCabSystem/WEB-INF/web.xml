@@ -141,9 +141,39 @@
     <url-pattern>/admin/bookings/generateBill</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ManageBookingPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.ManageBookingPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ManageBookingPageServlet</servlet-name>
+    <url-pattern>/admin/bookings</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ReportPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.ReportPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ReportPageServlet</servlet-name>
+    <url-pattern>/report/report-summery</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ManageCabPageServlet</servlet-name>
+    <servlet-class>lk.icbt.MegaCityCabSystem.controller.ManageCabPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ManageCabPageServlet</servlet-name>
+    <url-pattern>/admin/manage-cab</url-pattern>
   </servlet-mapping>
 
   <!-- Session Configuration -->

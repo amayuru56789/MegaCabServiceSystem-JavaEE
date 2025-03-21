@@ -3,11 +3,9 @@ package lk.icbt.MegaCityCabSystem.controller;
 import lk.icbt.MegaCityCabSystem.bo.BookingBO;
 import lk.icbt.MegaCityCabSystem.bo.impl.BookingBOImpl;
 import lk.icbt.MegaCityCabSystem.dto.BookingDTO;
+import lk.icbt.MegaCityCabSystem.dto.DriverDTO;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 
 @WebServlet(name = "BookingServlet", urlPatterns = {"/booking"})
@@ -68,15 +67,45 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        log("booking servlet search method print msg");
+//        log("booking servlet search method print msg");
+//
+//        resp.setContentType("application/json");
+//
+//        PrintWriter writer = resp.getWriter();
+//        JsonReader reader = Json.createReader(req.getReader());
+//        JsonObject obj = reader.readObject();
+//        String bookingID = obj.getString("bookingId");
+//
+//        bookingBO.searchBooking(bookingID);
+
+        log("driver list for table");
 
         resp.setContentType("application/json");
 
         PrintWriter writer = resp.getWriter();
-        JsonReader reader = Json.createReader(req.getReader());
-        JsonObject obj = reader.readObject();
-        String bookingID = obj.getString("bookingId");
 
-        bookingBO.searchBooking(bookingID);
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+        ArrayList<BookingDTO> details = bookingBO.getAllBooking();
+        for (BookingDTO bookingDTO : details){
+            JsonObjectBuilder obj = Json.createObjectBuilder();
+            obj.add("bookingId", bookingDTO.getBookingId());
+            obj.add("customerId", bookingDTO.getCustomerId());
+            obj.add("cabId", bookingDTO.getCabId());
+            obj.add("regNo", bookingDTO.getRegistrationNo());
+//            obj.add("experienceOfYear", bookingDTO.getBookingDate());
+//            obj.add("email", bookingDTO.getLastUpdatedDate());
+//            obj.add("updatedTime", bookingDTO.getLastUpdatedTime());
+            obj.add("destination", bookingDTO.getDestination());
+            obj.add("destinationDetail", bookingDTO.getDestinationDetails());
+            obj.add("status", bookingDTO.getActivityStatus());
+//            obj.add("pickupDateTime", bookingDTO.getPickupDateTime());
+            obj.add("pickupAddress", bookingDTO.getPickupAddress());
+            obj.add("distance", bookingDTO.getDistance());
+
+            arrayBuilder.add(obj.build());
+        }
+
+        writer.print(arrayBuilder.build());
     }
 }

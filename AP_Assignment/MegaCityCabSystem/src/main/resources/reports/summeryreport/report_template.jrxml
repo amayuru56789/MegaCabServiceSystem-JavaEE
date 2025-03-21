@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="customerReport" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="2395a014-2610-4efd-a0e5-d9dc92c95b20">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="alternateStyle">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
+			<style backcolor="#D7E8F7"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="bankmail" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{bankmail}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="banktel" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{banktel}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="bankaddressheader" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{bankaddressheader}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="bankaddress" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{bankaddress}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="printeddate" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{printeddate}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="taskdes" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{taskdes}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pagedes" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{pagedes}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="secdes" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{secdes}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="imageurl" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{imageurl}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fdate" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{fdate}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tdate" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{tdate}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="page" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{page}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="task" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{task}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="section" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{section}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="userrole" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{userrole}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SQL_tdate" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{tdate}+" 23:59:59"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="username" class="java.lang.String"/>
+	<parameter name="fromdate" class="java.lang.String"/>
+	<parameter name="todate" class="java.lang.String"/>
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<field name="bookingNumber" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="customerPhone" class="java.lang.String"/>
+	<field name="destination" class="java.lang.String"/>
+	<field name="destinationDetails" class="java.lang.String"/>
+	<field name="pickupDateTime" class="java.util.Date"/>
+	<field name="activityStatus" class="java.lang.String"/>
+	<field name="pickupAddress" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="162" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" mode="Opaque" x="100" y="2" width="681" height="61" forecolor="#007CC6" backcolor="#007CC6" uuid="e892dcf7-33df-4670-966a-4b91348c30c3"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-2" x="100" y="2" width="680" height="26" forecolor="#FFFFFF" uuid="7e8d1ae3-019c-4912-860d-55bbcb16b5db"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mega City Cab System]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="0" y="68" width="783" height="1" forecolor="#007CC6" uuid="8d4a9819-f01e-4f59-8d5f-4ca89701a6f8"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-3" x="1" y="72" width="781" height="21" backcolor="#FFFF99" uuid="270c3ed2-0ba7-449e-be6b-bb25e40320c6"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Search Parameters]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" stretchType="RelativeToBandHeight" mode="Transparent" x="21" y="93" width="58" height="17" backcolor="#FFFFFF" uuid="47538286-fbc7-4325-8ab1-ad14c20d8b66"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From Date   ]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToBandHeight" x="87" y="94" width="157" height="17" uuid="308260c1-5b33-4b59-afba-5e7722f116fd"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fromdate} == "--" ? "-ALL-" :$P{fromdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" stretchType="RelativeToBandHeight" x="266" y="95" width="58" height="17" uuid="2dfa0537-9ef7-4eab-a728-dbb76fbc3eff"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To Date       ]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToBandHeight" x="333" y="95" width="136" height="17" uuid="178c5c57-c610-4430-9104-ae1c2ee4c8c6"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{todate} == "--" ? "-ALL-" :$P{todate}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement key="rectangle-4" mode="Transparent" x="578" y="70" width="198" height="86" forecolor="#3333FF" backcolor="#C7E0FE" uuid="0ae738cb-245d-41db-9f1d-dcaeec7032cf"/>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-19" stretchType="RelativeToBandHeight" x="582" y="93" width="61" height="17" uuid="824e15ee-d7c0-4cb4-8dbc-8196eeffd463"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Total Record Count    ]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToBandHeight" x="655" y="93" width="104" height="17" uuid="54b21d5e-7349-485f-aa2a-1985145a3af1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-20" stretchType="RelativeToBandHeight" x="584" y="120" width="61" height="17" uuid="de3483d2-73c5-4abd-b99a-0de500d9638c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Generated on  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-1" x="100" y="43" width="680" height="17" forecolor="#FFFFFF" uuid="d603c120-91b0-4c5c-8113-cd41be7b2bdf"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Booking Summery Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="655" y="120" width="120" height="17" uuid="7f14e22b-b69e-4136-84a2-2d16563ae5be"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{printeddate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" stretchType="RelativeToBandHeight" mode="Transparent" x="79" y="94" width="8" height="16" backcolor="#FFFFFF" uuid="5332292f-98a5-40e0-a329-55c5671c772f"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" stretchType="RelativeToBandHeight" mode="Transparent" x="325" y="95" width="8" height="17" backcolor="#FFFFFF" uuid="fcc6ea15-74b0-4ae1-9eef-2f419aa805ff"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" stretchType="RelativeToBandHeight" mode="Transparent" x="646" y="93" width="8" height="17" backcolor="#FFFFFF" uuid="7a8abdb0-338f-445b-a1f9-d4577f19bf5d"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" stretchType="RelativeToBandHeight" mode="Transparent" x="646" y="120" width="8" height="17" backcolor="#FFFFFF" uuid="2c6e8e4e-4873-49b9-8455-7f74d7b604c4"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="19" width="85" height="37" uuid="f7a5339d-5e22-4098-9eb8-6945c3ce8455"/>
+				<imageExpression><![CDATA[$P{imageurl}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-7" x="700" y="-1" width="82" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="8f095e93-9ba8-4f9c-8fb7-f69fc943a2ae"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-15" x="713" y="2" width="62" height="14" forecolor="#FFFFFF" uuid="99387c53-4309-4a88-a46e-3ef044b7b032"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Created Date]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-9" x="0" y="-1" width="70" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="a1e1f6e7-376e-48d8-a5c0-6f1fde143445"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-17" style="alternateStyle" x="10" y="2" width="60" height="14" forecolor="#FFFFFF" uuid="9ea1c55c-c43c-4420-906e-6ddd19dab978"/>
+				<textElement textAlignment="Left">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Booking No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-10" x="469" y="-1" width="61" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="31fc89c7-64df-4911-83f7-9227ec7f4907"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-18" x="490" y="2" width="22" height="14" forecolor="#FFFFFF" uuid="47776228-5515-4b45-91c3-6c182023d7bf"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Task]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-2" x="70" y="-1" width="76" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="12ccf30c-1dce-4e8f-bb1a-ae679e0ff672"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-10" x="87" y="2" width="45" height="14" forecolor="#FFFFFF" uuid="562f8c64-0b81-4be3-b6d8-7b52c703f13b"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-3" x="146" y="-1" width="83" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="9161643f-d626-4dbd-8a50-94009023b640"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-11" x="151" y="2" width="64" height="14" forecolor="#FFFFFF" uuid="151f3b67-4d00-463a-92c4-afb4b3099124"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mobile No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-4" x="229" y="-1" width="88" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="047f3344-8bc9-4220-b020-5db6f6e19d8d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle-5" x="317" y="-1" width="152" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="91fb51fb-e150-4eb2-ad64-4624ef54f2ab"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-12" x="248" y="2" width="55" height="14" forecolor="#FFFFFF" uuid="6dc10b0c-3705-43ff-bc86-de07a011aa0d"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Destination]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" x="335" y="2" width="120" height="14" forecolor="#FFFFFF" uuid="355b13e2-226e-418c-b239-80b293df8c1b"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Destination Detail]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-7" x="530" y="-1" width="77" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="8e9ec654-591c-4eb7-9de8-398aed00006f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle-7" x="607" y="-1" width="93" height="17" forecolor="#FFFFFF" backcolor="#007CC6" uuid="d12fcb0d-b759-46e3-8f59-0e3633ed483b"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-15" x="607" y="2" width="93" height="14" forecolor="#FFFFFF" uuid="799fd79d-c1ef-403d-9751-1263ffde954c"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Last Updated User]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-15" x="540" y="2" width="60" height="14" forecolor="#FFFFFF" uuid="1d1f7d12-aeed-4dab-ad68-759d561bfee8"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Pickup Address]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Prevent">
+			<staticText>
+				<reportElement style="alternateStyle" stretchType="RelativeToTallestObject" mode="Opaque" x="1" y="0" width="781" height="18" uuid="a14f06b8-1b2a-4868-b0f1-2d78136cfde4"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Dashed" lineColor="#007CC6"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="70" y="0" width="76" height="18" uuid="87afcc24-1555-4891-803b-0a976af417c5"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph lineSpacing="Single" spacingAfter="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerName} == null  ? "--" : $F{customerName}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" style="alternateStyle" stretchType="RelativeToTallestObject" x="1" y="0" width="69" height="18" uuid="c4f71b33-d497-4891-a6fd-2738619427d8"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph spacingAfter="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bookingNumber} == null  ? "--" : $F{bookingNumber}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="229" y="0" width="88" height="18" uuid="d80cce14-7143-4dd1-afdf-588231f6b331"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph lineSpacing="Single" spacingAfter="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destination} == null  ? "--" :$F{destination}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="607" y="0" width="94" height="18" uuid="6be5387e-96ff-431e-b028-0602bde34cb1"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bookingNumber} == null  ? "--" :$F{bookingNumber}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="530" y="0" width="76" height="18" uuid="9a217f45-d9c9-43f4-9dea-8319be120277"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pickupAddress} == null  ? "--" :$F{pickupAddress}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="317" y="-1" width="138" height="18" uuid="4f3fb40a-26b9-4511-9992-c2e118765fbc"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destinationDetails} == null  ? "--" :$F{destinationDetails}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="147" y="0" width="82" height="18" uuid="73f92b49-37f1-4f8b-930d-0bc3cb208c03"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerPhone} == null  ? "--" :$F{customerPhone}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="false">
+				<reportElement key="textField" stretchType="RelativeToTallestObject" x="455" y="-2" width="73" height="18" uuid="ea5223d0-25ff-4c56-b9f1-2fde081d3a20"/>
+				<box topPadding="2" bottomPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destination} == null  ? "--" :$F{destination}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="340" y="11" width="100" height="18" uuid="7880c4f1-467c-4cc3-ba29-31de8cf233ef"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-2" x="0" y="32" width="783" height="1" forecolor="#007CC6" uuid="c4c78c20-254f-4ed3-b220-ad24bed8adbd"/>
+			</line>
+			<line>
+				<reportElement key="line-2" x="0" y="45" width="783" height="1" forecolor="#007CC6" uuid="703f638f-d0ea-42f0-89e1-a44641cf49e1"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-2" mode="Transparent" x="33" y="33" width="248" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="8c8c32c3-ce58-409b-84bd-312521239ebb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bankaddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="368" y="33" width="205" height="12" uuid="1238db8e-7aa7-480a-ba3f-4e8535573b1c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bankmail}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="636" y="33" width="105" height="12" uuid="f351db08-965e-450c-9e37-3e7982cbaa1b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{banktel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>
