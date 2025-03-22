@@ -118,50 +118,118 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- AJAX Form Submission -->
-<%--<script>--%>
-    <%--$(document).ready(function () {--%>
-        <%--$("#addCabForm").on("submit", function (event) {--%>
-            <%--event.preventDefault(); // Prevent default form submission--%>
+<script>
+    $(document).ready(function () {
 
-            <%--// Create FormData object--%>
-            <%--const formData = new FormData(this);--%>
+        // Load cab list on page load
+        loadCabList();
 
-            <%--// Send AJAX request--%>
-            <%--$.ajax({--%>
-                <%--url: "${pageContext.request.contextPath}/cab", // Servlet URL--%>
-                <%--type: "POST",--%>
-                <%--data: formData,--%>
-                <%--processData: false, // Prevent jQuery from processing the data--%>
-                <%--contentType: false, // Prevent jQuery from setting content type--%>
-                <%--success: function (response) {--%>
-                    <%--// Parse the JSON response--%>
-                    <%--const jsonResponse = JSON.parse(response);--%>
+        $("#cabForm").on("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
 
-                    <%--// Display the response message--%>
-                    <%--if (jsonResponse.status === 200) {--%>
-                        <%--$("#responseMessage").html(`--%>
-                            <%--<div class="alert alert-success" role="alert">--%>
-                                <%--${jsonResponse.message}--%>
-                            <%--</div>--%>
-                        <%--`);--%>
-                    <%--} else {--%>
-                        <%--$("#responseMessage").html(`--%>
-                            <%--<div class="alert alert-danger" role="alert">--%>
-                                <%--${jsonResponse.message}--%>
-                            <%--</div>--%>
-                        <%--`);--%>
-                    <%--}--%>
-                <%--},--%>
-                <%--error: function (xhr, status, error) {--%>
-                    <%--$("#responseMessage").html(`--%>
-                        <%--<div class="alert alert-danger" role="alert">--%>
-                            <%--An error occurred: ${error}--%>
-                        <%--</div>--%>
-                    <%--`);--%>
-                <%--}--%>
-            <%--});--%>
-        <%--});--%>
-    <%--});--%>
-<%--</script>--%>
+            // Create FormData object
+            var formData = new FormData(this);
+
+            // Send AJAX request
+            $.ajax({
+                url: "${pageContext.request.contextPath}/cab", // Servlet URL
+                type: "POST",
+                data: formData,
+                processData: false, // Prevent jQuery from processing the data
+                contentType: false, // Prevent jQuery from setting content type
+                success: function (response) {
+                    // Parse the JSON response
+                    var jsonResponse = JSON.parse(response);
+
+                    // Display the response message
+                    if (jsonResponse.status === 200) {
+                        alert(response.message);
+                        location.reload();
+                        // $("#responseMessage").html(
+                        //     '<div class="alert alert-success" role="alert">' +
+                        //     jsonResponse.message +
+                        //     '</div>'
+                        // );
+                    } else {
+                        alert(response.message);
+                        // $("#responseMessage").html(
+                        //     '<div class="alert alert-danger" role="alert">' +
+                        //     jsonResponse.message +
+                        //     '</div>'
+                        // );
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $("#responseMessage").html(
+                        '<div class="alert alert-danger" role="alert">' +
+                        'An error occurred: ' + error +
+                        '</div>'
+                    );
+                }
+            });
+        });
+
+        // Function to load cab list
+        function loadCabList() {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/cab", // Servlet URL
+                type: "GET",
+                success: function (response) {
+                    console.log("Server Response:", response); // Log the raw response
+
+                    // Check if the response is already an object
+                    var cabs;
+                    if (typeof response === "string") {
+                        // If the response is a string, parse it as JSON
+                        try {
+                            cabs = JSON.parse(response);
+                        } catch (e) {
+                            console.error("Error parsing JSON:", e);
+                            $("#responseMessage").html(
+                                '<div class="alert alert-danger" role="alert">' +
+                                'Invalid server response' +
+                                '</div>'
+                            );
+                            return;
+                        }
+                    } else {
+                        // If the response is already an object, use it directly
+                        cabs = response;
+                    }
+
+                    // Build the table body
+                    var tableBody = "";
+                    cabs.forEach(function (cab) {
+                        tableBody +=
+                            '<tr>' +
+                            '<td>' + cab.cabId + '</td>' +
+                            '<td>' + cab.model + '</td>' +
+                            '<td>' + cab.mileage + '</td>' +
+                            '<td>' + cab.status + '</td>' +
+                            '<td>' + cab.price + '</td>' +
+                            '<td>' + cab.capacity + '</td>' +
+                            '<td><img src="data:image/jpeg;base64,' + cab.image + '" width="50" height="50"></td>' +
+                            '<td>' +
+                            '<button class="btn btn-sm btn-warning" onclick="editCab(\'' + cab.cabId + '\')">Edit</button>' +
+                            '<button class="btn btn-sm btn-danger" onclick="deleteCab(\'' + cab.cabId + '\')">Delete</button>' +
+                            '</td>' +
+                            '</tr>';
+                    });
+
+                    // Update the table body
+                    $("#cabTableBody").html(tableBody);
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error:", error); // Log AJAX errors
+                    $("#responseMessage").html(
+                        '<div class="alert alert-danger" role="alert">' +
+                        'Failed to load cab list: ' + error +
+                        '</div>'
+                    );
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
