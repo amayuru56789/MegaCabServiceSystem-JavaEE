@@ -1,11 +1,13 @@
 package lk.icbt.MegaCityCabSystem.dao.impl;
 
 import lk.icbt.MegaCityCabSystem.dao.DriverDAO;
+import lk.icbt.MegaCityCabSystem.dto.CommonDTO;
 import lk.icbt.MegaCityCabSystem.entity.Cab;
 import lk.icbt.MegaCityCabSystem.entity.Driver;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DriverDAOImpl implements DriverDAO {
     @Override
@@ -57,7 +59,9 @@ public class DriverDAOImpl implements DriverDAO {
                         rst.getString("experienceYears"),
                         rst.getString("email") != null ? rst.getString("email") : "--", // Handle null email
                         rst.getString("address") != null ? rst.getString("address") : "--", // Handle null address
-                        rst.getString("status") != null ? rst.getString("address") : "--"
+                        rst.getString("status") != null ? rst.getString("address") : "--",
+                        "--",
+                        "--"
                 );
                 drivers.add(driver);
             }
@@ -100,7 +104,7 @@ public class DriverDAOImpl implements DriverDAO {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
             con.setAutoCommit(false); // Start transaction
 
-            String query = "INSERT INTO Driver (driverID, driverName, mobileNo, license, experienceYears, email, address, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Driver (driverID, driverName, mobileNo, license, experienceYears, email, address, status, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pstm = con.prepareStatement(query);
             pstm.setObject(1, entity.getDriverID());
             pstm.setObject(2, entity.getDriverName());
@@ -110,10 +114,19 @@ public class DriverDAOImpl implements DriverDAO {
             pstm.setObject(6, entity.getEmail());
             pstm.setObject(7, entity.getAddress());
             pstm.setObject(8, entity.getStatus());
+            pstm.setObject(9, entity.getDriverID());
+
+            String userQuery = "INSERT INTO User (userId, userName, password, userrole) VALUES (?, ?, ?, ?)";
+            PreparedStatement userPstm = con.prepareStatement(userQuery);
+            userPstm.setObject(1, entity.getDriverID()); // Use customerId as userId
+            userPstm.setObject(2, entity.getUserName()); // Username
+            userPstm.setObject(3, entity.getPassword()); // Password
+            userPstm.setObject(4, "driver");
 
             int rowsAffected = pstm.executeUpdate();
+            int userRows = userPstm.executeUpdate();
 
-            if (rowsAffected > 0) {
+            if (rowsAffected > 0 && userRows > 0) {
                 con.commit(); // Commit the transaction
                 return true;
             } else {
@@ -138,15 +151,15 @@ public class DriverDAOImpl implements DriverDAO {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
 
-        PreparedStatement pstm = con.prepareStatement("update Driver set driverName=?, mobileNo=?, license=?, experienceYears=?, email=?, address=?, status=? where driverId=?");
+        PreparedStatement pstm = con.prepareStatement("update Driver set driverName=?, mobileNo=?, license=?,  email=?, address=?  where driverId=?");
         pstm.setObject(1, entity.getDriverName());
         pstm.setObject(2, entity.getMobileNo());
         pstm.setObject(3, entity.getLicense());
-        pstm.setObject(4, entity.getExperienceOfYear());
-        pstm.setObject(5, entity.getEmail());
-        pstm.setObject(6, entity.getAddress());
-        pstm.setObject(7, entity.getStatus());
-        pstm.setObject(8, entity.getDriverID());
+//        pstm.setObject(4, entity.getExperienceOfYear());
+        pstm.setObject(4, entity.getEmail());
+        pstm.setObject(5, entity.getAddress());
+//        pstm.setObject(7, entity.getStatus());
+        pstm.setObject(6, entity.getDriverID());
 
         if (pstm.executeUpdate() > 0){
             return true;
@@ -190,7 +203,9 @@ public class DriverDAOImpl implements DriverDAO {
                     rst.getString(5),
                     rst.getString(6),
                     rst.getString(7),
-                    rst.getString(8)
+                    rst.getString(8),
+                    "--",
+                    "--"
             );
         }else{
             return null;
@@ -253,6 +268,27 @@ public class DriverDAOImpl implements DriverDAO {
 
         // Return null if no driver is found
         return null;
+    }
+
+    public List<CommonDTO> getAllDriverDes() throws ClassNotFoundException, SQLException {
+        List<CommonDTO> customerList = new ArrayList<>();
+        String query = "SELECT * FROM driver WHERE status = 'available' "; // Query with parameter
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+        PreparedStatement pstm = con.prepareStatement(query);
+        ResultSet rs = pstm.executeQuery();
+        while (rs.next()) {
+            String driverId = rs.getString("driverId");
+            String driverName = rs.getString("driverName");
+
+            // Create a CommonDTO object and add it to the list
+            CommonDTO driver = new CommonDTO("--", "--", "--", "--", driverId, driverName, "--");
+            customerList.add(driver);
+        }
+
+        return customerList;
+
     }
 
 }

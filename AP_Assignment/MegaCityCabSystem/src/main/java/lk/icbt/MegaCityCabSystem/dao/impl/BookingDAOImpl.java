@@ -49,7 +49,10 @@ public class BookingDAOImpl implements BookingDAO {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
-        PreparedStatement pstm = con.prepareStatement("insert into Booking values(?,?,?,?,?,?,?,?,?,?,?)");
+//        PreparedStatement pstm = con.prepareStatement("insert into Booking values(?,?,?,?,?,?,?,?,?,?,?)");
+        String sql = "INSERT INTO Booking (bookingid, customerid, cabid, registrationno, bookingdate, destination, destinationdetail, activitystatus, pickupdatetime, pickupaddress, distance) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setObject(1, entity.getBookingId());
         pstm.setObject(2, entity.getCustomerId());
         pstm.setObject(3, entity.getCabId());

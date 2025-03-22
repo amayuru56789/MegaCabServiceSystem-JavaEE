@@ -2,7 +2,9 @@ package lk.icbt.MegaCityCabSystem.controller;
 
 import lk.icbt.MegaCityCabSystem.bo.CabBO;
 import lk.icbt.MegaCityCabSystem.bo.impl.CabBOImpl;
+import lk.icbt.MegaCityCabSystem.dao.impl.DriverDAOImpl;
 import lk.icbt.MegaCityCabSystem.dto.CabDTO;
+import lk.icbt.MegaCityCabSystem.dto.CommonDTO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,11 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @WebServlet("/customer/cabs-view")
 public class CabsPageServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

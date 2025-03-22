@@ -1,6 +1,7 @@
 package lk.icbt.MegaCityCabSystem.dao.impl;
 
 import lk.icbt.MegaCityCabSystem.dao.CustomerDAO;
+import lk.icbt.MegaCityCabSystem.db.DbConfiguration;
 import lk.icbt.MegaCityCabSystem.dto.CustomerDTO;
 import lk.icbt.MegaCityCabSystem.entity.Customer;
 
@@ -108,7 +109,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             // Insert into User table for login authentication
             String userQuery = "INSERT INTO User (userId, userName, password, userrole) VALUES (?, ?, ?, ?)";
             PreparedStatement userPstm = con.prepareStatement(userQuery);
-            userPstm.setObject(1, entity.getCustomerId()); // Use customerId as userId
+            userPstm.setObject(1, "2"); // Use customerId as userId
             userPstm.setObject(2, entity.getUserName()); // Username
             userPstm.setObject(3, entity.getPassword()); // Password
             userPstm.setObject(4, "customer"); // Role
@@ -136,13 +137,16 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean updateCustomer(Customer entity) throws SQLException, ClassNotFoundException {
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
 //        LocalDateTime time = LocalDateTime.now();
 //        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 //        String lastDateTime = time.format(format);
         //String passwordEncrypt = en.encrypt(registration.getPassword());
-        PreparedStatement pstm = con.prepareStatement("update Customer set customerName=?, address=?, email=?, telephoneNo=?, nicNo=?, updatedDate=?, updatedTime=? where customerId=?");
+
+        Connection connection = DbConfiguration.getInstance().getConnection();
+
+        PreparedStatement pstm = connection.prepareStatement("update Customer set customerName=?, address=?, email=?, telephoneNo=?, nicNo=?, updatedDate=?, updatedTime=? where customerId=?");
         pstm.setObject(1, entity.getCustomerName());
         pstm.setObject(2, entity.getAddress());
         pstm.setObject(3, entity.getEmail());

@@ -33,7 +33,7 @@ public class DriverDashboardPageServlet extends HttpServlet {
         System.out.println("user ID "+userId+" print driver id "+driverId);
         String driverStatus = driverBO.getDriverStatus("3");
         try {
-            BookingCommonDTO commonDTO = bookingDAO.getBookingBaseStatus("D002");
+            BookingCommonDTO commonDTO = bookingDAO.getBookingBaseStatus(userId);
             List<BookingCommonDTO> allBookingList = bookingDAO.getAllBookingList("pending");
 
 

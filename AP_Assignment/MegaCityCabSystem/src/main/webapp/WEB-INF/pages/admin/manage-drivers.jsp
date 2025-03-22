@@ -70,9 +70,9 @@
             <h3 class="mb-4">Add New Driver</h3>
             <form id="addDriverFormData">
                 <div class="mb-3">
-                    <%--<label for="driverId" class="form-label">Driver Name:</label>--%>
-                    <%--<input type="text" class="form-control" id="driverId" name="driverId" required>--%>
-                        <input type="hidden" id="driverId" name="driverId"> <!-- Hidden field for driverID -->
+                    <label for="driverId" class="form-label">Driver ID:</label>
+                    <input type="text" class="form-control" id="driverId" name="driverId" required>
+                        <%--<input type="hidden" id="driverId" name="driverId"> <!-- Hidden field for driverID -->--%>
                 </div>
                 <div class="mb-3">
                     <label for="driverName" class="form-label">Driver Name:</label>
@@ -99,6 +99,14 @@
                     <input type="email" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="mb-3">
+                    <label for="userName" class="form-label">User Name:</label>
+                    <input type="text" class="form-control" id="userName" name="userName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
                     <label for="address" class="form-label">Address:</label>
                     <textarea class="form-control" id="address" name="address" required></textarea>
                 </div>
@@ -113,6 +121,9 @@
                 <div class="mb-3">
                     <button type="submit" class="btn btn-success" id="submitButton">
                         <i class="fas fa-save me-2"></i> Add Driver
+                    </button>
+                    <button type="button" class="btn btn-success" id="updateButton" style="display: none;" onclick="updateDriver()">
+                        <i class="fas fa-save me-2"></i> Update Driver
                     </button>
                 </div>
             </form>
@@ -168,6 +179,16 @@
 <script>
 
     $(document).ready(function () {
+        fetchDrivers();
+
+        // Handle form submission for adding a driver
+        $("#addDriverFormData").on("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            addDriver();
+        });
+    });
+
+    function fetchDrivers() {
         // Fetch driver data using AJAX
         $.ajax({
             url: "${pageContext.request.contextPath}/driver", // URL to your servlet
@@ -226,18 +247,22 @@
                 alert("An error occurred while fetching driver data. Please try again.");
             }
         });
-    });
+    }
 
     function showAddDriverForm() {
         // Reset the form and set the modal title
         $("#addDriverFormData")[0].reset();
         $("#modalTitle").text("Add New Driver");
-        $("#submitButton").html('<i class="fas fa-save me-2"></i> Add Driver');
+        // $("#submitButton").html('<i class="fas fa-save me-2"></i> Add Driver');
+        $("#submitButton").show(); // Show the Add button
+        $("#updateButton").hide(); // Hide the Update button
         document.getElementById("addDriverForm").style.display = "block";
+        document.getElementById("addDriverButton").style.display = "none"; // Hide the Add button outside the modal
     }
 
     function hideAddDriverForm() {
         document.getElementById("addDriverForm").style.display = "none";
+        document.getElementById("addDriverButton").style.display = "block"; // Show the Add button outside the modal
     }
 
     function showEditDriverForm(driver) {
@@ -254,12 +279,22 @@
         $("#address").val(driver.address);
         $("#status").val(driver.status);
 
+
         // Set the modal title and button text
         $("#modalTitle").text("Edit Driver");
-        $("#submitButton").html('<i class="fas fa-save me-2"></i> Update Driver');
+        $("#submitButton").hide(); // Hide the Add button
+        $("#updateButton").show(); // Show the Update button
+        // $("#submitButton").html('<i class="fas fa-save me-2"></i> Update Driver');
+
+        // Hide specific fields for update scenario
+        $("#userName").hide();
+        $("#password").hide();
+        $("#year").hide();
+        $("#status").hide();
 
         // Show the modal
         document.getElementById("addDriverForm").style.display = "block";
+        document.getElementById("addDriverButton").style.display = "none"; // Hide the Add button outside the modal
     }
 
     function confirmDeleteDriver(driverId) {
@@ -269,48 +304,104 @@
         }
     }
 
-    // AJAX for adding/updating a driver
-    $(document).ready(function () {
-        $("#addDriverFormData").on("submit", function (event) {
-            event.preventDefault(); // Prevent the default form submission
+    function addDriver() {
+        // Serialize form data
+        var formData = {
+            driverId: $("#driverId").val(),
+            driverName: $("#driverName").val(),
+            license: $("#licenseNumber").val(),
+            address: $("#address").val(),
+            email: $("#email").val(),
+            telephoneNo: $("#phone").val(),
+            experience: $("#year").val(),
+            status: $("#status").val(),
+            userName: $("#userName").val(),
+            password: $("#password").val()
+        };
 
-            // Serialize form data
-            var formData = {
-                driverId: $("#driverId").val(),
-                driverName: $("#driverName").val(),
-                license: $("#licenseNumber").val(),
-                address: $("#address").val(),
-                email: $("#email").val(),
-                telephoneNo: $("#phone").val(),
-                experience: $("#year").val(),
-                status: $("#status").val()
-            };
+        // Determine the URL and method based on whether it's an add or update operation
+        var url = "${pageContext.request.contextPath}/driver";
+        // var method = formData.driverId ? "PUT" : "POST";
 
-            // Determine the URL and method based on whether it's an add or update operation
-            var url = "${pageContext.request.contextPath}/driver";
-            var method = formData.driverId ? "PUT" : "POST";
+        // Send AJAX request
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+                if (response.status === 200) {
+                    alert(response.message); // Show success message
+                    hideAddDriverForm(); // Hide the modal
+                    location.reload(); // Reload the page to reflect changes
+                } else {
+                    alert(response.message); // Show error message
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("An error occurred while adding the driver. Please try again.");
+            }
+        });
+    }
 
-            // Send AJAX request
+    function updateDriver() {
+        // Serialize form data
+        var formData = {
+            driverId: $("#driverId").val(),
+            driverName: $("#driverName").val(),
+            license: $("#licenseNumber").val(),
+            address: $("#address").val(),
+            email: $("#email").val(),
+            telephoneNo: $("#phone").val(),
+            experience: $("#year").val(),
+            status: $("#status").val(),
+            userName: $("#userName").val(),
+            password: $("#password").val()
+        };
+
+        // Send AJAX request to update the driver
+        $.ajax({
+            url: "${pageContext.request.contextPath}/driver", // Update the URL as needed
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+                if (response.status === 200) {
+                    alert(response.message); // Show success message
+                    hideAddDriverForm(); // Hide the modal
+                    fetchDrivers(); // Refresh the table
+                } else {
+                    alert(response.message); // Show error message
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("An error occurred while updating the driver. Please try again.");
+            }
+        });
+    }
+
+    function confirmDeleteDriver(driverId) {
+        if (confirm("Are you sure you want to delete this driver?")) {
+            // Send AJAX request to delete the driver
             $.ajax({
-                url: url,
-                type: method,
-                contentType: "application/json",
-                data: JSON.stringify(formData),
+                url: "${pageContext.request.contextPath}/driver", // Update the URL as needed
+                type: "DELETE",
+                contentType: "application/json", // Set content type to JSON
+                data: JSON.stringify({ driverId: driverId }), // Send driverId in JSON format
                 success: function (response) {
                     if (response.status === 200) {
                         alert(response.message); // Show success message
-                        hideAddDriverForm(); // Hide the modal
-                        location.reload(); // Reload the page to reflect changes
+                        fetchDrivers(); // Refresh the table
                     } else {
                         alert(response.message); // Show error message
                     }
                 },
                 error: function (xhr, status, error) {
-                    alert("An error occurred while adding the driver. Please try again.");
+                    alert("An error occurred while deleting the driver. Please try again.");
                 }
             });
-        });
-    });
+        }
+    }
 </script>
 </body>
 </html>

@@ -9,11 +9,12 @@ public class Cab {
     private String capacity;
     private String imgPath;
     private byte[] imgByte;
+    private String driverId;
 
     public Cab() {
     }
 
-    public Cab(String cabID, String model, String mileage, String availableStatus, Double price, String capacity, String imgPath,  byte[] imgByte) {
+    public Cab(String cabID, String model, String mileage, String availableStatus, Double price, String capacity, String imgPath,  byte[] imgByte, String driverId) {
         this.cabID = cabID;
         this.model = model;
         this.mileage = mileage;
@@ -22,6 +23,7 @@ public class Cab {
         this.capacity = capacity;
         this.imgPath = imgPath;
         this.imgByte = imgByte;
+        this.driverId = driverId;
     }
 
     public String getCabID() {
@@ -86,6 +88,14 @@ public class Cab {
 
     public void setImgByte(byte[] imgByte) {
         this.imgByte = imgByte;
+    }
+
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
     @Override

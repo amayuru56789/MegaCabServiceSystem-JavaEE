@@ -29,7 +29,8 @@ public class CabDAOImpl implements CabDAO {
                     rst.getDouble(5),
                     rst.getString(6),
                     "empty",
-                    rst.getBytes(8)
+                    rst.getBytes(8),
+                    rst.getString(7)
             );
             cabs.add(cab);
         }
@@ -62,7 +63,7 @@ public class CabDAOImpl implements CabDAO {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cabservicedb", "root", "1234");
-        String query = "INSERT INTO cab (cabId, model, milage, availablestatus, price, capacity, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO cab (cabId, model, milage, availablestatus, price, capacity, image, driverId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement pstm = con.prepareStatement(query);
 
@@ -73,6 +74,7 @@ public class CabDAOImpl implements CabDAO {
             pstm.setDouble(5, entity.getPrice());
             pstm.setString(6, entity.getCapacity());
             pstm.setBytes(7, entity.getImgByte()); // Set image as BLOB
+            pstm.setString(8, entity.getDriverId());
 
             int rowsAffected = pstm.executeUpdate();
             return rowsAffected > 0 ? true : false;
@@ -136,7 +138,8 @@ public class CabDAOImpl implements CabDAO {
                     rst.getDouble(5),
                     rst.getString(6),
                     "empty",
-                    rst.getBytes(7)
+                    rst.getBytes(7),
+                    rst.getString(8)
             );
         }else{
             return null;

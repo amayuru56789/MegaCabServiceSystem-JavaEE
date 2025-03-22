@@ -8,6 +8,7 @@ import lk.icbt.MegaCityCabSystem.dto.CustomerDTO;
 import lk.icbt.MegaCityCabSystem.dto.DriverDTO;
 import lk.icbt.MegaCityCabSystem.entity.Cab;
 import lk.icbt.MegaCityCabSystem.entity.Driver;
+import lk.icbt.MegaCityCabSystem.util.security.SHA256Algorithm;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 public class DriverBOImpl implements DriverBO {
 
     DriverDAO driverDAO = new DriverDAOImpl();
+
+    SHA256Algorithm sha256Algorithm = new SHA256Algorithm();
     @Override
     public ArrayList<DriverDTO> getAllDriver() {
 
@@ -33,7 +36,9 @@ public class DriverBOImpl implements DriverBO {
                                 driver.getExperienceOfYear(),
                                 driver.getEmail(),
                                 driver.getAddress(),
-                                driver.getStatus()
+                                driver.getStatus(),
+                                driver.getUserName(),
+                                driver.getPassword()
                         )
                 );
             }
@@ -61,11 +66,15 @@ public class DriverBOImpl implements DriverBO {
                     driverDTO.getExperienceOfYear(),
                     driverDTO.getEmail(),
                     driverDTO.getAddress(),
-                    driverDTO.getStatus()
+                    driverDTO.getStatus(),
+                    driverDTO.getUserName(),
+                    sha256Algorithm.makeHash(driverDTO.getPassword())
             ));
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -84,7 +93,9 @@ public class DriverBOImpl implements DriverBO {
                     driverDTO.getExperienceOfYear(),
                     driverDTO.getEmail(),
                     driverDTO.getAddress(),
-                    driverDTO.getStatus()
+                    driverDTO.getStatus(),
+                    driverDTO.getUserName(),
+                    driverDTO.getPassword()
             ));
 
         } catch (SQLException e) {
@@ -130,7 +141,9 @@ public class DriverBOImpl implements DriverBO {
                         searchDriver.getExperienceOfYear(),
                         searchDriver.getEmail(),
                         searchDriver.getAddress(),
-                        searchDriver.getStatus()
+                        searchDriver.getStatus(),
+                        searchDriver.getUserName(),
+                        searchDriver.getPassword()
                 );
 
             }else{

@@ -122,6 +122,7 @@ public class CabServlet extends HttpServlet {
             String availableStatus = req.getParameter("status");
             String priceStr  = req.getParameter("price");
             String capacity = req.getParameter("capacity");
+            String driverId = req.getParameter("driverId");
 
             // Get the uploaded image file
             Part imagePart = req.getPart("image");
@@ -140,7 +141,7 @@ public class CabServlet extends HttpServlet {
             Double price  = Double.parseDouble(priceStr);
 
             // Create CabDTO object
-            CabDTO cabDTO = new CabDTO(cabID, cabType, mileage, availableStatus, price, capacity, "empty", imageBytes);
+            CabDTO cabDTO = new CabDTO(cabID, cabType, mileage, availableStatus, price, capacity, "empty", imageBytes, driverId);
 
             // Save cab using BO
             if (cabBO.addCab(cabDTO)) {

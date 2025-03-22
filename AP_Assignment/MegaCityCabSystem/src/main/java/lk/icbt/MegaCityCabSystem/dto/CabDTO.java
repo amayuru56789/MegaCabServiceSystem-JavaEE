@@ -10,6 +10,7 @@ public class CabDTO {
     private String imgPath;
     private byte[] imgByte;
     private String base64Image; // Base64-encoded image string
+    private String driverId;
 
 
     public CabDTO() {
@@ -17,7 +18,7 @@ public class CabDTO {
 
 
 
-    public CabDTO(String cabID, String model, String mileage, String availableStatus, Double price, String capacity, String imgPath, byte[] imgByte) {
+    public CabDTO(String cabID, String model, String mileage, String availableStatus, Double price, String capacity, String imgPath, byte[] imgByte, String driverId) {
         this.cabID = cabID;
         this.model = model;
         this.mileage = mileage;
@@ -26,6 +27,7 @@ public class CabDTO {
         this.capacity = capacity;
         this.imgPath = imgPath;
         this.imgByte = imgByte;
+        this.driverId = driverId;
 
     }
 
@@ -99,6 +101,14 @@ public class CabDTO {
 
     public void setBase64Image(String base64Image) {
         this.base64Image = base64Image;
+    }
+
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
     @Override

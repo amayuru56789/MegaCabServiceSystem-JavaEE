@@ -58,6 +58,16 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label for="driverId" class="form-label">Driver:</label>
+                    <select class="form-select" id="driverId" name="driverId" required>
+                        <option value="">-- Select Driver --</option>
+                        <c:forEach items="${drivers}" var="driver">
+                            <option value="${driver.driverId}">${driver.driverName} </option>
+                        </c:forEach>
+                    </select>
+                </div>
+
                 <!-- Price -->
                 <div class="mb-3">
                     <label for="price" class="form-label">Price:</label>
@@ -203,7 +213,7 @@
                         tableBody +=
                             '<tr>' +
                             '<td>' + cab.cabId + '</td>' +
-                            '<td>' + cab.model + '</td>' +
+                            '<td>' + cab.cabType + '</td>' +
                             '<td>' + cab.mileage + '</td>' +
                             '<td>' + cab.status + '</td>' +
                             '<td>' + cab.price + '</td>' +

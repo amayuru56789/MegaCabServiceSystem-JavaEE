@@ -11,8 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -67,9 +69,11 @@ public class DriverServlet extends HttpServlet {
         String contact = obj.getString("telephoneNo");
         String experience = obj.getString("experience");
         String status = obj.getString("status");
+        String userName = obj.getString("userName");
+        String password = obj.getString("password");
 
         DriverDTO driverDTO = new DriverDTO(driverID, driverName, contact, license, experience, email,
-                address , status);
+                address , status, userName, password);
 
         if (driverBO.addDriver(driverDTO)){
             JsonObjectBuilder response = Json.createObjectBuilder();
@@ -102,11 +106,13 @@ public class DriverServlet extends HttpServlet {
         String address = obj.getString("address");
         String email = obj.getString("email");
         String contact = obj.getString("telephoneNo");
-        String experience = obj.getString("experience");
-        String status = obj.getString("status");
+//        String experience = obj.getString("experience");
+//        String status = obj.getString("status");
+//        String userName = obj.getString("userName");
+//        String password = obj.getString("password");
 
-        DriverDTO driverDTO = new DriverDTO(driverID, driverName, contact, license, experience, email,
-                address , status);
+        DriverDTO driverDTO = new DriverDTO(driverID, driverName, contact, license, "--", email,
+                address , "--", "--", "--");
 
         if (driverBO.updateDriver(driverDTO)){
             JsonObjectBuilder response = Json.createObjectBuilder();
@@ -129,7 +135,18 @@ public class DriverServlet extends HttpServlet {
 
         resp.setContentType("application/json");
 
-        String driverID = req.getParameter("driverID");
+        // Read the request body
+        StringBuilder requestBody = new StringBuilder();
+        try (BufferedReader reader = req.getReader()) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                requestBody.append(line);
+            }
+        }
+
+        JsonObject jsonObject = Json.createReader(new StringReader(requestBody.toString())).readObject();
+
+        String driverID = jsonObject.getString("driverId");
         System.out.println(driverID);
 
         PrintWriter writer = resp.getWriter();
